@@ -15,6 +15,7 @@ This project can be played at - [Countryle.CodySmith.me](http://countryle.codysm
  - Nextjs - Web framework
  - Fusejs - Fuzzy-search library used for autocomplete 
  - TailwindCSS - Styling
+ - Redux Toolkit - State Management  
 
 ## License
 Distributed under the MIT License. See LICENSE.txt for more information
