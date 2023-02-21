@@ -1,8 +1,7 @@
 # Countryle
 <p align="center">
-  <img src="CountryleWebpage.png?raw=true" alt="Project webpage"/>
+  <img src="Countryle.png?raw=true" alt="Project webpage"/>
 </p>
-
 
 A wordle based game where you guess the country based on the image
 
