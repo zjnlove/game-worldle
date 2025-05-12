@@ -42,15 +42,15 @@ function AutoCompleteBox(props) {
 				}
 			}
 
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			setIndex((index += add));
+			// 使用函数式更新，而不是修改 index
+			setIndex(prevIndex => prevIndex + add);
 		};
 
 		window.addEventListener("keydown", preventDefault, false);
 		return () => {
 			window.removeEventListener("keydown", preventDefault, false);
 		};
-	}, [index]);
+	}, [index, props.suggestions, props.onItemPress]);
 
 	useEffect(() => {
 		setFocusIndex(index);
@@ -67,16 +67,16 @@ function AutoCompleteBox(props) {
 	return (
 		<div className="w-full relative ">
 			<div className={`${show ? "absolute w-full z-10 " : "hidden"}`}>
-				{props.suggestions.map((item, index) => {
+				{props.suggestions.map((item, idx) => {
 					return (
 						<Suggestion
-							key={index}
+							key={idx}
 							onItemPress={(item) => props.onItemPress(item)}
 							item={item}
 							roundedBottom={
-								props.suggestions.length - 1 === index
+								props.suggestions.length - 1 === idx
 							}
-							focus={focusIndex - 1 === index}
+							focus={focusIndex - 1 === idx}
 						></Suggestion>
 					);
 				})}
