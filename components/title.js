@@ -28,72 +28,15 @@ function Title(props) {
 	return (
 		<h1
 			className={
-				"text-center text-6xl font-semibold flex flex-row uppercase"
+				"text-center text-6xl font-semibold flex flex-row items-center uppercase bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text"
 			}
 		>
-			<div
-				className={`text-red-700 ${
-					animationStage >= 1 && "animate-upDown"
-				}`}
-			>
-				c
-			</div>
-			<div
-				className={`text-orange-700 ${
-					animationStage >= 2 && "animate-upDown"
-				}`}
-			>
-				o
-			</div>
-			<div
-				className={`text-yellow-700  ${
-					animationStage >= 3 && "animate-upDown"
-				}`}
-			>
-				u
-			</div>
-			<div
-				className={`text-lime-700 ${
-					animationStage >= 4 && "animate-upDown"
-				}`}
-			>
-				n
-			</div>
-			<div
-				className={`text-green-700 ${
-					animationStage >= 5 && "animate-upDown"
-				}`}
-			>
-				t
-			</div>
-			<div
-				className={`text-cyan-700 ${
-					animationStage >= 6 && "animate-upDown"
-				}`}
-			>
-				r
-			</div>
-			<div
-				className={`text-blue-700 ${
-					animationStage >= 7 && "animate-upDown"
-				}`}
-			>
-				y
-			</div>
-			<div
-				className={`text-indigo-700 ${
-					animationStage >= 8 && "animate-upDown"
-				}`}
-			>
-				l
-			</div>
-			<div
-				className={`text-violet-700 ${
-					animationStage >= 9 && "animate-upDown"
-				}`}
-			>
-				e
-			</div>
+			{/* <img 
+				src="/favicon-32x32.png" 
+				alt="地图图标" 
+				className="mr-2 h-8 w-8"
+			/> */}
+			Country Worldle
 		</h1>
 	);
 }
