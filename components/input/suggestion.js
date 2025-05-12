@@ -4,17 +4,26 @@ import PropTypes from "prop-types";
 function Suggestion(props) {
 	return (
 		<div
-			className={`hover:bg-swamp-700 hover:cursor-pointer border-t-[1px] py-2 px-2 bg-swamp-800 text-gray-300 border-x-2 border-swamp-700 border-rounded-lg ${
-				props.roundedBottom ? "rounded-b-lg border-b-2" : " "
-			} ${props.focus ? "bg-swamp-700" : " "}`}
 			onClick={() => props.onItemPress(props.item)}
-			// ref={suggestionsRefs.current[index]}
+			className={`border-l-2 border-r-2 border-[--ghibli-soft-blue] px-4 py-2 bg-white hover:bg-[--ghibli-cream] transition-colors cursor-pointer ${
+				props.roundedBottom ? "rounded-b-md border-b-2" : "border-b-[1px]"
+			} ${props.focus ? "bg-[--ghibli-soft-green] bg-opacity-30" : ""}`}
 		>
-			{props.item.item.Alpha2Code} - {props.item.item.Country}
+			{props.item.item.Country}
 		</div>
 	);
 }
 
-Suggestion.propTypes = {};
+Suggestion.propTypes = {
+	item: PropTypes.object.isRequired,
+	onItemPress: PropTypes.func.isRequired,
+	roundedBottom: PropTypes.bool,
+	focus: PropTypes.bool,
+};
+
+Suggestion.defaultProps = {
+	roundedBottom: false,
+	focus: false,
+};
 
 export default Suggestion;

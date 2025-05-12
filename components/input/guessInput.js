@@ -66,11 +66,10 @@ function GuessInput(props) {
 	return (
 		<div className="flex flex-col w-full">
 			<input
-				className={`border-2 rounded-lg p-2 bg-swamp-800 text-gray-200 border-swamp-700 focus:outline-none ${
-					showSuggestions &&
-					"border-t-swamp-700 border-r-swamp-700 border-l-swamp-700 border-b-0 rounded-b-none"
+				className={`ghibli-input font-medium text-lg ${
+					showSuggestions ? "rounded-b-none border-b-0" : ""
 				}`}
-				placeholder="Type a country to start"
+				placeholder="Type a country name..."
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
 				disabled={isComplete}

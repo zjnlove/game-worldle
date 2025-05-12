@@ -65,8 +65,8 @@ function AutoCompleteBox(props) {
 	}, [suggestionsLength, index]);
 
 	return (
-		<div className="w-full relative ">
-			<div className={`${show ? "absolute w-full z-10 " : "hidden"}`}>
+		<div className="w-full relative">
+			<div className={`${show ? "absolute w-full z-20 rounded-b-md shadow-md overflow-hidden" : "hidden"}`}>
 				{props.suggestions.map((item, idx) => {
 					return (
 						<Suggestion
@@ -77,7 +77,7 @@ function AutoCompleteBox(props) {
 								props.suggestions.length - 1 === idx
 							}
 							focus={focusIndex - 1 === idx}
-						></Suggestion>
+						/>
 					);
 				})}
 			</div>

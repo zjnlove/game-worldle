@@ -25,18 +25,28 @@ function Title(props) {
 		}
 	}, [animationStage]);
 
-	return (
-		<h1
-			className={
-				"text-center text-6xl font-semibold flex flex-row items-center uppercase bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text"
-			}
+	const titleLetter = (letter, color, delay) => (
+		<span 
+			className="ghibli-title-letter"
+			style={{ 
+				color: `var(--ghibli-${color})`,
+				animationDelay: `${delay}ms`,
+				textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)'
+			}}
 		>
-			{/* <img 
-				src="/favicon-32x32.png" 
-				alt="地图图标" 
-				className="mr-2 h-8 w-8"
-			/> */}
-			Country Worldle
+			{letter}
+		</span>
+	);
+
+	return (
+		<h1 className="text-center text-6xl font-bold flex flex-row justify-center space-x-1 py-6">
+			{titleLetter("W", "green", 100)}
+			{titleLetter("o", "blue", 200)}
+			{titleLetter("r", "brown", 300)}
+			{titleLetter("l", "dark", 400)}
+			{titleLetter("d", "soft-blue", 500)}
+			{titleLetter("l", "soft-green", 600)}
+			{titleLetter("e", "green", 700)}
 		</h1>
 	);
 }

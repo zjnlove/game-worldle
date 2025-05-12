@@ -1,7 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Sen:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ghibli-green: #8cb37e;
+  --ghibli-blue: #65a5d1;
+  --ghibli-cream: #f5f2e9;
+  --ghibli-brown: #7d594c;
+  --ghibli-dark: #2c354a;
+  --ghibli-soft-blue: #aecbd6;
+  --ghibli-soft-green: #c5dac1;
+  --ghibli-sky: #cce5f9;
+}
+
 body {
-    background-color: #000d15;
+  background-color: var(--ghibli-cream);
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238cb37e' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  font-family: 'Sen', sans-serif;
+  color: var(--ghibli-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+}
+
+/* 吉卜力风格的按钮 */
+.ghibli-btn {
+  @apply rounded-md px-4 py-2 transition duration-300;
+  background-color: var(--ghibli-green);
+  color: var(--ghibli-cream);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ghibli-btn:hover {
+  background-color: transparent;
+  border-color: var(--ghibli-green);
+  color: var(--ghibli-green);
+}
+
+.ghibli-btn-secondary {
+  @apply rounded-md px-4 py-2 transition duration-300;
+  background-color: var(--ghibli-blue);
+  color: var(--ghibli-cream);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ghibli-btn-secondary:hover {
+  background-color: transparent;
+  border-color: var(--ghibli-blue);
+  color: var(--ghibli-blue);
+}
+
+/* 吉卜力风格的输入框 */
+.ghibli-input {
+  @apply rounded-md px-4 py-2;
+  background-color: white;
+  border: 2px solid var(--ghibli-soft-blue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.ghibli-input:focus {
+  outline: none;
+  border-color: var(--ghibli-blue);
+  box-shadow: 0 0 0 3px rgba(101, 165, 209, 0.2);
+}
+
+/* 吉卜力风格的卡片 */
+.ghibli-card {
+  @apply rounded-xl p-4;
+  background-color: white;
+  border: 1px solid var(--ghibli-soft-green);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 吉卜力风格的标题动画 */
+.ghibli-title-letter {
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.ghibli-title-letter:hover {
+  transform: translateY(-5px);
 }

@@ -6,9 +6,9 @@ import Guess from "./guess";
 function Guesses(props) {
 	const guesses = useSelector((state) => state.guesses.value);
 	return (
-		<div>
+		<div className="w-full">
 			{guesses.length > 0 ? (
-				<div className=" flex flex-col-reverse   dark:bg-swamp-800 px-2 py-2 w-full rounded-lg  ">
+				<div className="flex flex-col-reverse w-full">
 					{guesses.map((guess, index) => (
 						<Guess
 							guess={guess}
@@ -17,7 +17,11 @@ function Guesses(props) {
 						/>
 					))}
 				</div>
-			) : null}
+			) : (
+				<div className="text-center text-gray-500 italic mt-4">
+					Start guessing countries...
+				</div>
+			)}
 		</div>
 	);
 }

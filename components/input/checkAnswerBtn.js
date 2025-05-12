@@ -36,7 +36,7 @@ function CheckAnswerBtn(props) {
 		<div>
 			{/* <Tooltip /> */}
 			<button
-				className="bg-swamp-600 border-2 border-swamp-800 hover:bg-swamp-700 hover:text-gray-200 text-white  text-2xl px-2 pb-2 pt-1 w-full rounded-md justify-center  flex"
+				className="ghibli-btn w-full text-xl px-4 py-3 flex justify-center items-center"
 				onClick={onPress}
 				disabled={loading}
 			>
