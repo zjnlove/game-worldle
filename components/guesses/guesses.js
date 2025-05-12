@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Guess from "./guess";
 function Guesses(props) {
+	const { t } = useTranslation('common');
 	const guesses = useSelector((state) => state.guesses.value);
 	return (
 		<div className="w-full">
@@ -19,7 +21,7 @@ function Guesses(props) {
 				</div>
 			) : (
 				<div className="text-center text-gray-500 italic mt-4">
-					Start guessing countries...
+					{t('startGuessing')}
 				</div>
 			)}
 		</div>

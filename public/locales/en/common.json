@@ -1,0 +1,16 @@
+{
+  "title": "Worldle",
+  "newCountry": "New Country",
+  "playAgain": "Play Again",
+  "guessesTitle": "Your Guesses",
+  "guessPlaceholder": "Type a country name...",
+  "submitGuess": "Submit Guess",
+  "distance": "Distance",
+  "direction": "Direction",
+  "correct": "Correct!",
+  "congratulations": "Congratulations!",
+  "tryAgain": "Try Again",
+  "close": "Close",
+  "checking": "Checking",
+  "startGuessing": "Start guessing countries..."
+} 

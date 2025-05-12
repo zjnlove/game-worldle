@@ -3,6 +3,7 @@ import Head from "next/head";
 import { store, persistor } from "../store/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { appWithTranslation } from 'next-i18next';
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -42,4 +43,4 @@ function MyApp({ Component, pageProps }) {
 	);
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

@@ -1,0 +1,16 @@
+{
+  "title": "월들",
+  "newCountry": "새 나라",
+  "playAgain": "다시 하기",
+  "guessesTitle": "당신의 추측",
+  "guessPlaceholder": "국가 이름을 입력하세요...",
+  "submitGuess": "추측 제출",
+  "distance": "거리",
+  "direction": "방향",
+  "correct": "정답!",
+  "congratulations": "축하합니다!",
+  "tryAgain": "다시 시도",
+  "close": "닫기",
+  "checking": "확인 중",
+  "startGuessing": "국가 추측 시작..."
+} 

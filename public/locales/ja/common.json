@@ -1,0 +1,16 @@
+{
+  "title": "ワールドル",
+  "newCountry": "新しい国",
+  "playAgain": "もう一度プレイ",
+  "guessesTitle": "あなたの予想",
+  "guessPlaceholder": "国名を入力してください...",
+  "submitGuess": "予想を送信",
+  "distance": "距離",
+  "direction": "方向",
+  "correct": "正解！",
+  "congratulations": "おめでとう！",
+  "tryAgain": "再挑戦",
+  "close": "閉じる",
+  "checking": "確認中",
+  "startGuessing": "国を予想してみましょう..."
+} 

@@ -1,0 +1,16 @@
+{
+  "title": "Worldle",
+  "newCountry": "Neues Land",
+  "playAgain": "Nochmal spielen",
+  "guessesTitle": "Deine Vermutungen",
+  "guessPlaceholder": "Gib einen Ländernamen ein...",
+  "submitGuess": "Vermutung abgeben",
+  "distance": "Entfernung",
+  "direction": "Richtung",
+  "correct": "Richtig!",
+  "congratulations": "Herzlichen Glückwunsch!",
+  "tryAgain": "Erneut versuchen",
+  "close": "Schließen",
+  "checking": "Überprüfung",
+  "startGuessing": "Beginne Länder zu raten..."
+} 

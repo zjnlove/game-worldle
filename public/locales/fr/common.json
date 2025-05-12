@@ -1,0 +1,16 @@
+{
+  "title": "Worldle",
+  "newCountry": "Nouveau pays",
+  "playAgain": "Rejouer",
+  "guessesTitle": "Vos suppositions",
+  "guessPlaceholder": "Tapez un nom de pays...",
+  "submitGuess": "Soumettre",
+  "distance": "Distance",
+  "direction": "Direction",
+  "correct": "Correct !",
+  "congratulations": "Félicitations !",
+  "tryAgain": "Réessayer",
+  "close": "Fermer",
+  "checking": "Vérification",
+  "startGuessing": "Commencez à deviner des pays..."
+} 

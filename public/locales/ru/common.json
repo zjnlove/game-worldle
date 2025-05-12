@@ -1,0 +1,16 @@
+{
+  "title": "Вордли",
+  "newCountry": "Новая страна",
+  "playAgain": "Играть снова",
+  "guessesTitle": "Ваши догадки",
+  "guessPlaceholder": "Введите название страны...",
+  "submitGuess": "Отправить догадку",
+  "distance": "Расстояние",
+  "direction": "Направление",
+  "correct": "Правильно!",
+  "congratulations": "Поздравляем!",
+  "tryAgain": "Попробуйте еще раз",
+  "close": "Закрыть",
+  "checking": "Проверка",
+  "startGuessing": "Начните угадывать страны..."
+} 

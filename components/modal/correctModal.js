@@ -5,8 +5,10 @@ import CountrySVG from "../countrySVG";
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import { showModal } from "../../store/settingsSlice";
+import { useTranslation } from "react-i18next";
 
 function CorrectModal(props) {
+	const { t } = useTranslation('common');
 	const answer = useSelector((state) => state.answer.value);
 	const guesses = useSelector((state) => state.guesses.value);
 	const showModalState = useSelector(
@@ -32,9 +34,9 @@ function CorrectModal(props) {
 							</svg>
 						</div>
 						
-						<h2 className="text-4xl font-bold mb-4 text-[--ghibli-brown]">Congratulations!</h2>
+						<h2 className="text-4xl font-bold mb-4 text-[--ghibli-brown]">{t('congratulations')}</h2>
 						<p className="text-lg mb-6 text-[--ghibli-dark]">
-							You guessed the country correctly!
+							{t('correct')}
 						</p>
 						<p className="text-2xl font-semibold mb-4 text-[--ghibli-green]">{answer.Country}</p>
 						
@@ -43,14 +45,14 @@ function CorrectModal(props) {
 						</div>
 						
 						<p className="text-md mb-8 text-[--ghibli-blue]">
-							Attempts: <span className="font-bold">{guesses.length}</span>
+							{t('guessesTitle')}: <span className="font-bold">{guesses.length}</span>
 						</p>
 
 						<button
 							className="ghibli-btn text-lg py-3 px-6 animate-pulse"
 							onClick={() => props.playAgainPress()}
 						>
-							Play Again
+							{t('playAgain')}
 						</button>
 					</div>
 				</div>

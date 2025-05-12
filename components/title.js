@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function Title(props) {
+	const { t } = useTranslation('common');
 	const [animationStage, setAnimationStage] = useState(0);
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	let interval = useRef();
@@ -38,16 +41,22 @@ function Title(props) {
 		</span>
 	);
 
+	// 获取标题文本
+	const titleText = t('title');
+	
+	// 标题颜色数组
+	const colors = ['green', 'blue', 'brown', 'dark', 'soft-blue', 'soft-green', 'green'];
+
 	return (
-		<h1 className="text-center text-6xl font-bold flex flex-row justify-center space-x-1 py-6">
-			{titleLetter("W", "green", 100)}
-			{titleLetter("o", "blue", 200)}
-			{titleLetter("r", "brown", 300)}
-			{titleLetter("l", "dark", 400)}
-			{titleLetter("d", "soft-blue", 500)}
-			{titleLetter("l", "soft-green", 600)}
-			{titleLetter("e", "green", 700)}
-		</h1>
+		<div className="relative">
+			<LanguageSwitcher />
+			<h1 className="text-center text-6xl font-bold flex flex-row justify-center space-x-1 py-6">
+				{titleText.split('').map((letter, index) => {
+					const colorIndex = index % colors.length;
+					return titleLetter(letter, colors[colorIndex], (index + 1) * 100);
+				})}
+			</h1>
+		</div>
 	);
 }
 

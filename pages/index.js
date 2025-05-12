@@ -14,8 +14,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
 import { setSelection } from "../store/guessSelectionSlice";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Home() {
+	const { t } = useTranslation('common');
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
 
@@ -129,7 +132,7 @@ export default function Home() {
 								className="ghibli-btn text-lg py-3 px-10 mb-8 w-full"
 								onClick={() => newGame()}
 							>
-								Play Again
+								{t('playAgain')}
 							</button>
 						) : null}
 						
@@ -155,7 +158,7 @@ export default function Home() {
 							className="ghibli-btn-secondary w-full text-sm py-2"
 							onClick={() => newGame()}
 						>
-							New Country
+							{t('newCountry')}
 						</button>
 					</div>
 				</footer>
@@ -163,6 +166,11 @@ export default function Home() {
 		</div>
 	);
 }
-export async function getServerSideProps(context) {
-	return { props: {} };
+
+export async function getServerSideProps({ locale }) {
+	return {
+		props: {
+			...(await serverSideTranslations(locale, ['common'])),
+		},
+	};
 }

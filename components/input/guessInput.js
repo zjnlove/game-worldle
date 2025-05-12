@@ -5,8 +5,10 @@ import { CountryCoords } from "../data/countryCoords";
 import AutoCompleteBox from "./autoCompleteBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelection } from "../../store/guessSelectionSlice";
+import { useTranslation } from "react-i18next";
 
 function GuessInput(props) {
+	const { t } = useTranslation('common');
 	const [guess, setGuess] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [suggestions, setSuggestions] = useState([]);
@@ -69,7 +71,7 @@ function GuessInput(props) {
 				className={`ghibli-input font-medium text-lg ${
 					showSuggestions ? "rounded-b-none border-b-0" : ""
 				}`}
-				placeholder="Type a country name..."
+				placeholder={t('guessPlaceholder')}
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
 				disabled={isComplete}

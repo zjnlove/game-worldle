@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { CgSpinner } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import Tooltip from "../tooltip/tooltip";
+import { useTranslation } from "react-i18next";
+
 function CheckAnswerBtn(props) {
+	const { t } = useTranslation('common');
 	const [loading, setLoading] = useState(false);
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);
@@ -43,11 +46,11 @@ function CheckAnswerBtn(props) {
 				{loading ? (
 					<div className="flex items-center space-x-2">
 						<CgSpinner className="animate-spin mt-1" />
-						<div className="">Checking...</div>
+						<div className="">{t('checking')}...</div>
 					</div>
 				) : (
 					<div>
-						<div className="">Check Answer</div>
+						<div className="">{t('submitGuess')}</div>
 					</div>
 				)}
 			</button>

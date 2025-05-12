@@ -1,0 +1,16 @@
+{
+  "title": "國家猜猜樂",
+  "newCountry": "換個國家",
+  "playAgain": "再玩一次",
+  "guessesTitle": "你的猜測",
+  "guessPlaceholder": "請輸入國家名稱...",
+  "submitGuess": "提交猜測",
+  "distance": "距離",
+  "direction": "方向",
+  "correct": "正確！",
+  "congratulations": "恭喜你！",
+  "tryAgain": "再試一次",
+  "close": "關閉",
+  "checking": "檢查中",
+  "startGuessing": "開始猜測國家..."
+} 
