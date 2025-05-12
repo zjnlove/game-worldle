@@ -199,6 +199,33 @@ const LanguageSwitcher = () => {
           font-weight: bold;
           box-shadow: ${isDarkMode ? 'inset 0 0 10px rgba(0, 0, 0, 0.2)' : 'none'};
         }
+        
+        @media (max-width: 768px) {
+          .language-btn {
+            padding: 6px 10px;
+            font-size: 12px;
+          }
+          
+          .globe-icon {
+            width: 16px;
+            height: 16px;
+          }
+          
+          .lang-name {
+            max-width: 60px;
+          }
+          
+          .language-dropdown {
+            width: 120px;
+            right: 0;
+            left: auto;
+          }
+          
+          .dropdown-item {
+            padding: 8px 12px;
+            font-size: 12px;
+          }
+        }
       `}</style>
     </div>
   );

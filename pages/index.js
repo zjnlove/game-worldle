@@ -188,7 +188,7 @@ export default function Home() {
 			<div className="flex-1 flex flex-col items-center py-6 px-4 z-10 max-w-2xl mx-auto w-full">
 				{modalComponent}
 				
-				<div className="w-full mb-6">
+				<div className="w-full mb-6 title-container">
 					<Title />
 				</div>
 				
@@ -314,6 +314,23 @@ export default function Home() {
 					100% {
 						opacity: 0.3;
 						transform: scale(1);
+					}
+				}
+				
+				@media (max-width: 480px) {
+					.title-container {
+						margin-top: 20px;
+						margin-bottom: 30px;
+					}
+					
+					.py-6 {
+						padding-top: 1rem;
+						padding-bottom: 1rem;
+					}
+					
+					.map-container {
+						margin-bottom: 1rem;
+						padding: 0.75rem;
 					}
 				}
 			`}</style>

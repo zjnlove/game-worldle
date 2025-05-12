@@ -66,7 +66,7 @@ function Title(props) {
 			<style jsx>{`
 				.theme-container {
 					position: absolute;
-					left: 20px;
+					right: 50px;
 					top: 50%;
 					transform: translateY(-50%);
 					z-index: 100;
@@ -74,15 +74,33 @@ function Title(props) {
 				
 				.language-container {
 					position: absolute;
-					right: 20px;
+					right: -70px;
 					top: 50%;
 					transform: translateY(-50%);
 					z-index: 100;
 				}
 				
 				@media (max-width: 768px) {
-					.theme-container, .language-container {
-						top: -40px;
+					.theme-container {
+						right: auto;
+						left: 10px;
+						top: 50%;
+					}
+					
+					.language-container {
+						right: 10px;
+						top: 50%;
+					}
+					
+					h1 {
+						font-size: 2.5rem;
+						padding: 1rem 0;
+					}
+				}
+				
+				@media (max-width: 480px) {
+					h1 {
+						font-size: 2rem;
 					}
 				}
 			`}</style>

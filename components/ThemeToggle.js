@@ -119,6 +119,18 @@ const ThemeToggle = () => {
         .theme-btn:hover .theme-icon {
           transform: ${isDarkMode ? 'rotate(45deg)' : 'rotate(-45deg)'};
         }
+        
+        @media (max-width: 768px) {
+          .theme-btn {
+            width: 36px;
+            height: 36px;
+          }
+          
+          .theme-icon {
+            width: 16px;
+            height: 16px;
+          }
+        }
       `}</style>
     </div>
   );
