@@ -13,17 +13,38 @@ function GuessInput(props) {
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [suggestions, setSuggestions] = useState([]);
 	const [itemSelectedState, setItemSelectedState] = useState(null);
+	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	const guesses = useSelector((state) => state.guesses.value);
 
 	const dispatch = useDispatch();
 
-	// //Get answer from the store
-	// const answerCountry = useSelector((state) => state.answer.value);
-
-	// //Get itemSelected from the store
-	// const itemSelected = useSelector((state) => state.guessSelection.value);
+	// 检测当前主题
+	useEffect(() => {
+		const checkDarkMode = () => {
+			const theme = document.documentElement.getAttribute('data-theme');
+			setIsDarkMode(theme === 'dark');
+		};
+		
+		// 初始检测
+		checkDarkMode();
+		
+		// 创建一个观察器监听data-theme属性变化
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					checkDarkMode();
+				}
+			});
+		});
+		
+		// 开始观察
+		observer.observe(document.documentElement, { attributes: true });
+		
+		// 清理观察器
+		return () => observer.disconnect();
+	}, []);
 
 	//Search when guess state changes (as user types)
 	const onType = (text) => {
@@ -66,11 +87,16 @@ function GuessInput(props) {
 	}, [guesses]);
 
 	return (
-		<div className="flex flex-col w-full">
+		<div className="flex flex-col w-full guess-input-container">
 			<input
 				className={`ghibli-input font-medium text-lg ${
-					showSuggestions ? "rounded-b-none border-b-0" : ""
+					showSuggestions ? "rounded-b-none" : ""
 				}`}
+				style={{
+					borderColor: isDarkMode ? 'var(--ghibli-blue)' : 'var(--ghibli-soft-blue)',
+					borderBottomWidth: showSuggestions ? '0' : '2px',
+					backgroundColor: isDarkMode ? 'var(--input-background)' : 'white'
+				}}
 				placeholder={t('guessPlaceholder')}
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
@@ -81,6 +107,12 @@ function GuessInput(props) {
 				show={showSuggestions}
 				onItemPress={(item) => setItemSelectedState(item)}
 			/>
+			
+			<style jsx>{`
+				.guess-input-container {
+					position: relative;
+				}
+			`}</style>
 		</div>
 	);
 }

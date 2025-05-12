@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
 function Title(props) {
 	const { t } = useTranslation('common');
@@ -49,13 +50,42 @@ function Title(props) {
 
 	return (
 		<div className="relative">
-			<LanguageSwitcher />
+			<div className="theme-container">
+				<ThemeToggle />
+			</div>
+			<div className="language-container">
+				<LanguageSwitcher />
+			</div>
 			<h1 className="text-center text-6xl font-bold flex flex-row justify-center space-x-1 py-6">
 				{titleText.split('').map((letter, index) => {
 					const colorIndex = index % colors.length;
 					return titleLetter(letter, colors[colorIndex], (index + 1) * 100);
 				})}
 			</h1>
+			
+			<style jsx>{`
+				.theme-container {
+					position: absolute;
+					left: 20px;
+					top: 50%;
+					transform: translateY(-50%);
+					z-index: 100;
+				}
+				
+				.language-container {
+					position: absolute;
+					right: 20px;
+					top: 50%;
+					transform: translateY(-50%);
+					z-index: 100;
+				}
+				
+				@media (max-width: 768px) {
+					.theme-container, .language-container {
+						top: -40px;
+					}
+				}
+			`}</style>
 		</div>
 	);
 }

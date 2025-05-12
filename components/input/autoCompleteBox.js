@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Suggestion from "./suggestion";
 
@@ -7,6 +7,33 @@ function AutoCompleteBox(props) {
 	const [suggestionsLength, setSuggestionsLength] = useState(0);
 	const [focusIndex, setFocusIndex] = useState(0);
 	const [index, setIndex] = useState(0);
+	const [isDarkMode, setIsDarkMode] = useState(false);
+	
+	// 检测当前主题
+	useEffect(() => {
+		const checkDarkMode = () => {
+			const theme = document.documentElement.getAttribute('data-theme');
+			setIsDarkMode(theme === 'dark');
+		};
+		
+		// 初始检测
+		checkDarkMode();
+		
+		// 创建一个观察器监听data-theme属性变化
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					checkDarkMode();
+				}
+			});
+		});
+		
+		// 开始观察
+		observer.observe(document.documentElement, { attributes: true });
+		
+		// 清理观察器
+		return () => observer.disconnect();
+	}, []);
 
 	//Check if any suggestions are passed
 	useEffect(() => {
@@ -15,7 +42,6 @@ function AutoCompleteBox(props) {
 		} else {
 			setShow(false);
 			setFocusIndex(0);
-			// window.removeEventListener("keydown", preventDefault, false);
 		}
 	}, [props.suggestions, props.show]);
 
@@ -24,6 +50,7 @@ function AutoCompleteBox(props) {
 		setIndex(0);
 		setFocusIndex(0);
 	}, [props.suggestions]);
+	
 	useEffect(() => {}, [suggestionsLength]);
 
 	useEffect(() => {
@@ -66,7 +93,12 @@ function AutoCompleteBox(props) {
 
 	return (
 		<div className="w-full relative">
-			<div className={`${show ? "absolute w-full z-20 rounded-b-md shadow-md overflow-hidden" : "hidden"}`}>
+			<div 
+				className={`${show ? "suggestions-container" : "hidden"}`}
+				style={{
+					boxShadow: isDarkMode ? '0 6px 16px rgba(0, 0, 0, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
+				}}
+			>
 				{props.suggestions.map((item, idx) => {
 					return (
 						<Suggestion
@@ -81,6 +113,22 @@ function AutoCompleteBox(props) {
 					);
 				})}
 			</div>
+			
+			<style jsx>{`
+				.suggestions-container {
+					position: absolute;
+					width: 100%;
+					z-index: 20;
+					border-radius: 0 0 0.375rem 0.375rem;
+					overflow: hidden;
+					animation: dropdownFadeIn 0.2s ease;
+				}
+				
+				@keyframes dropdownFadeIn {
+					from { opacity: 0; transform: translateY(-5px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+			`}</style>
 		</div>
 	);
 }
