@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Fuse from "fuse.js";
 import { CountryCoords } from "../data/countryCoords";
 import AutoCompleteBox from "./autoCompleteBox";
@@ -8,7 +8,8 @@ import { setSelection } from "../../store/guessSelectionSlice";
 import { useTranslation } from "react-i18next";
 
 function GuessInput(props) {
-	const { t } = useTranslation('common');
+	const { t: tCommon } = useTranslation('common');
+	const { t: tCountries } = useTranslation('countries');
 	const [guess, setGuess] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [suggestions, setSuggestions] = useState([]);
@@ -19,6 +20,15 @@ function GuessInput(props) {
 	const guesses = useSelector((state) => state.guesses.value);
 
 	const dispatch = useDispatch();
+
+	// 创建一个本地化的国家数据，包含翻译后的国家名称
+	const localizedCountryCoords = useMemo(() => {
+		return CountryCoords.map(country => ({
+			...country,
+			// 添加翻译后的国家名称作为新的可搜索字段
+			LocalizedName: tCountries(country.Country, country.Country)
+		}));
+	}, [tCountries]);
 
 	// 检测当前主题
 	useEffect(() => {
@@ -50,9 +60,11 @@ function GuessInput(props) {
 	const onType = (text) => {
 		if (text.length > 0) {
 			setGuess(text);
-			//Set up fuse with countries data
-			const fuse = new Fuse(CountryCoords, {
-				keys: ["Country", "Alpha2Code"],
+			//Set up fuse with localized countries data
+			const fuse = new Fuse(localizedCountryCoords, {
+				keys: ["Country", "Alpha2Code", "LocalizedName"],
+				threshold: 0.3, // 增加匹配容错度
+				ignoreLocation: true // 忽略文本位置，更好地支持不同语言
 			});
 
 			let result = fuse.search(text, { limit: 5 }); //Search for guess in countries data
@@ -60,7 +72,6 @@ function GuessInput(props) {
 			setShowSuggestions(true);
 		} else {
 			setGuess(text);
-
 			setShowSuggestions(false);
 		}
 	};
@@ -69,10 +80,11 @@ function GuessInput(props) {
 	useEffect(() => {
 		dispatch(setSelection(itemSelectedState));
 		if (itemSelectedState !== null) {
-			setGuess(itemSelectedState.item.Country);
+			// 显示翻译后的国家名称
+			setGuess(tCountries(itemSelectedState.item.Country, itemSelectedState.item.Country));
 			setShowSuggestions(false);
 		}
-	}, [itemSelectedState]);
+	}, [itemSelectedState, tCountries]);
 
 	//Clear input when answer is correct
 	useEffect(() => {
@@ -97,7 +109,7 @@ function GuessInput(props) {
 					borderBottomWidth: showSuggestions ? '0' : '2px',
 					backgroundColor: isDarkMode ? 'var(--input-background)' : 'white'
 				}}
-				placeholder={t('guessPlaceholder')}
+				placeholder={tCommon('guessPlaceholder')}
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
 				disabled={isComplete}

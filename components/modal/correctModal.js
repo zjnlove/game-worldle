@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 function CorrectModal(props) {
 	const { t } = useTranslation('common');
+	const { t: tCountries } = useTranslation('countries');
 	const answer = useSelector((state) => state.answer.value);
 	const guesses = useSelector((state) => state.guesses.value);
 	const showModalState = useSelector(
@@ -38,7 +39,7 @@ function CorrectModal(props) {
 						<p className="text-lg mb-6 text-[--text-primary]">
 							{t('correct')}
 						</p>
-						<p className="text-2xl font-semibold mb-4 text-[--ghibli-green]">{answer.Country}</p>
+						<p className="text-2xl font-semibold mb-4 text-[--ghibli-green]">{tCountries(answer.Country, answer.Country)}</p>
 						
 						<div className="relative w-1/2 mb-6 bg-[--background-secondary] rounded-lg p-2">
 							<CountrySVG className={"w-full"} />

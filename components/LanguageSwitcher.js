@@ -165,9 +165,9 @@ const LanguageSwitcher = () => {
           background-color: ${isDarkMode ? 'var(--ghibli-dark-blue)' : 'white'};
           border-radius: 12px;
           box-shadow: 0 6px 16px rgba(0, 0, 0, ${isDarkMode ? '0.25' : '0.12'});
-          overflow: hidden;
+          overflow-y: auto;
           width: 140px;
-          max-height: 300px;
+          max-height: 400px;
           animation: dropdownFadeIn 0.3s ease;
           border: 1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)'};
           margin-top: 8px;
