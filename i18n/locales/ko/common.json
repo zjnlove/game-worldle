@@ -1,0 +1,21 @@
+{
+  "title": "월들",
+  "newCountry": "새 나라",
+  "playAgain": "다시 하기",
+  "guessesTitle": "당신의 추측",
+  "guessPlaceholder": "국가 이름을 입력하세요...",
+  "submitGuess": "추측 제출",
+  "distance": "거리",
+  "direction": "방향",
+  "correct": "정답!",
+  "congratulations": "축하합니다!",
+  "tryAgain": "다시 시도",
+  "close": "닫기",
+  "checking": "확인 중",
+  "startGuessing": "국가 추측 시작...",
+  "maxGuessesReached": "최대 추측 횟수에 도달했습니다!",
+  
+  "seoTitle": "실루엣으로 국가 맞추기",
+  "seoDescription": "Worldle로 지리 지식을 테스트하세요. 국가의 실루엣을 보고 맞추는 재미있는 게임입니다. 매일 새로운 도전으로 지리 능력을 향상시켜 보세요.",
+  "seoKeywords": "worldle, wordle, 지리 게임, 국가 퀴즈, 국가 맞추기, 지도 게임, 교육 게임"
+} 

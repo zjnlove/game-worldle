@@ -1,0 +1,21 @@
+{
+  "title": "Worldle",
+  "newCountry": "New Country",
+  "playAgain": "Play Again",
+  "guessesTitle": "Your Guesses",
+  "guessPlaceholder": "Type a country name...",
+  "submitGuess": "Submit Guess",
+  "distance": "Distance",
+  "direction": "Direction",
+  "correct": "Correct!",
+  "congratulations": "Congratulations!",
+  "tryAgain": "Try Again",
+  "close": "Close",
+  "checking": "Checking",
+  "startGuessing": "Start guessing countries...",
+  "maxGuessesReached": "Maximum guesses reached!",
+  
+  "seoTitle": "Guess the country from its shape",
+  "seoDescription": "Test your geography knowledge with Worldle, a fun game where you guess countries from their silhouette. Play daily challenges and improve your geography skills.",
+  "seoKeywords": "worldle, wordle, geography game, country quiz, guess the country, map game, educational game"
+} 

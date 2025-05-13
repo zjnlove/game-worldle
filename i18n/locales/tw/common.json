@@ -1,0 +1,21 @@
+{
+  "title": "國家猜猜樂",
+  "newCountry": "換個國家",
+  "playAgain": "再玩一次",
+  "guessesTitle": "你的猜測",
+  "guessPlaceholder": "請輸入國家名稱...",
+  "submitGuess": "提交猜測",
+  "distance": "距離",
+  "direction": "方向",
+  "correct": "正確！",
+  "congratulations": "恭喜你！",
+  "tryAgain": "再試一次",
+  "close": "關閉",
+  "checking": "檢查中",
+  "startGuessing": "開始猜測國家...",
+  "maxGuessesReached": "已達到最大猜測次數！",
+  
+  "seoTitle": "根據輪廓猜國家",
+  "seoDescription": "測試您的地理知識，猜猜國家輪廓，提高您的地理技能。每天挑戰不同國家，增進您的世界地理知識！",
+  "seoKeywords": "worldle, wordle, 地理遊戲, 國家測驗, 猜國家, 地圖遊戲, 教育遊戲"
+} 

@@ -1,4 +1,4 @@
-import { CountryCoords } from "./data/countryCoords";
+import { CountryCoords } from "./data/countrycodes";
 import { setAnswer } from "../store/answerSlice";
 import { store } from "../store/store";
 

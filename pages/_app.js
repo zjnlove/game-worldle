@@ -3,13 +3,50 @@ import Head from "next/head";
 import { store, persistor } from "../store/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { appWithTranslation, useTranslation } from 'next-i18next';
+import nextI18NextConfig from '../next-i18next.config';
 
 function MyApp({ Component, pageProps }) {
+	const { t } = useTranslation('common', { 
+		useSuspense: false // 添加这个避免悬挂错误
+	}) || { t: key => key }; // 提供fallback避免报错
+	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
+	
+	// 获取页面传递的SEO自定义数据
+	const pageTitle = t('seoTitle')||pageProps.title;
+	const pageDescription = t('seoDescription')||pageProps.description;
+	const pageKeywords = t('seoKeywords')||pageProps.keywords;
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<Head>
-					<title>Countryle - Guess the country</title>
+					<title>Worldle - {pageTitle}</title>
+					<meta name="description" content={pageDescription} />
+					<meta name="keywords" content={pageKeywords} />
+					
+					{/* 规范链接 */}
+					<link rel="canonical" href={`${siteUrl}${pageProps.canonicalPath || ''}`} />
+					
+					{/* Open Graph 标签 */}
+					<meta property="og:title" content={`Worldle - ${pageTitle}`} />
+					<meta property="og:description" content={pageDescription} />
+					<meta property="og:type" content="website" />
+					<meta property="og:url" content={`${siteUrl}${pageProps.canonicalPath || ''}`} />
+					<meta property="og:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
+					<meta property="og:locale" content={pageProps.locale || 'en'} />
+					
+					{/* Twitter 卡片 */}
+					<meta name="twitter:card" content="summary_large_image" />
+					<meta name="twitter:title" content={`Worldle - ${pageTitle}`} />
+					<meta name="twitter:description" content={pageDescription} />
+					<meta name="twitter:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
+					
+					{/* 移动设备元标签 */}
+					<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+					<meta name="mobile-web-app-capable" content="yes" />
+					<meta name="apple-mobile-web-app-capable" content="yes" />
+					
+					{/* 站点图标 */}
 					<link
 						rel="apple-touch-icon"
 						sizes="180x180"
@@ -35,6 +72,14 @@ function MyApp({ Component, pageProps }) {
 					/>
 					<meta name="msapplication-TileColor" content="#2d89ef" />
 					<meta name="theme-color" content="#ffffff" />
+					
+					{/* 注入页面特定的结构化数据 */}
+					{pageProps.structuredData && (
+						<script
+							type="application/ld+json"
+							dangerouslySetInnerHTML={{ __html: JSON.stringify(pageProps.structuredData) }}
+						/>
+					)}
 				</Head>
 				<Component {...pageProps} />
 			</PersistGate>
@@ -42,4 +87,4 @@ function MyApp({ Component, pageProps }) {
 	);
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp, nextI18NextConfig);

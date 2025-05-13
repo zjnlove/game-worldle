@@ -1,35 +1,70 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Fuse from "fuse.js";
-import { CountryCoords } from "../data/countryCoords";
+import { CountryCoords } from "../data/countrycodes";
 import AutoCompleteBox from "./autoCompleteBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelection } from "../../store/guessSelectionSlice";
+import { useTranslation } from "react-i18next";
 
 function GuessInput(props) {
+	const { t: tCommon } = useTranslation('common');
+	const { t: tCountries } = useTranslation('countries');
 	const [guess, setGuess] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [suggestions, setSuggestions] = useState([]);
 	const [itemSelectedState, setItemSelectedState] = useState(null);
+	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	const guesses = useSelector((state) => state.guesses.value);
 
 	const dispatch = useDispatch();
 
-	// //Get answer from the store
-	// const answerCountry = useSelector((state) => state.answer.value);
+	// 创建一个本地化的国家数据，包含翻译后的国家名称
+	const localizedCountryCoords = useMemo(() => {
+		return CountryCoords.map(country => ({
+			...country,
+			// 添加翻译后的国家名称作为新的可搜索字段
+			LocalizedName: tCountries(country.Country, country.Country)
+		}));
+	}, [tCountries]);
 
-	// //Get itemSelected from the store
-	// const itemSelected = useSelector((state) => state.guessSelection.value);
+	// 检测当前主题
+	useEffect(() => {
+		const checkDarkMode = () => {
+			const theme = document.documentElement.getAttribute('data-theme');
+			setIsDarkMode(theme === 'dark');
+		};
+		
+		// 初始检测
+		checkDarkMode();
+		
+		// 创建一个观察器监听data-theme属性变化
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					checkDarkMode();
+				}
+			});
+		});
+		
+		// 开始观察
+		observer.observe(document.documentElement, { attributes: true });
+		
+		// 清理观察器
+		return () => observer.disconnect();
+	}, []);
 
 	//Search when guess state changes (as user types)
 	const onType = (text) => {
 		if (text.length > 0) {
 			setGuess(text);
-			//Set up fuse with countries data
-			const fuse = new Fuse(CountryCoords, {
-				keys: ["Country", "Alpha2Code"],
+			//Set up fuse with localized countries data
+			const fuse = new Fuse(localizedCountryCoords, {
+				keys: ["Country", "Alpha2Code", "LocalizedName"],
+				threshold: 0.3, // 增加匹配容错度
+				ignoreLocation: true // 忽略文本位置，更好地支持不同语言
 			});
 
 			let result = fuse.search(text, { limit: 5 }); //Search for guess in countries data
@@ -37,7 +72,6 @@ function GuessInput(props) {
 			setShowSuggestions(true);
 		} else {
 			setGuess(text);
-
 			setShowSuggestions(false);
 		}
 	};
@@ -46,10 +80,11 @@ function GuessInput(props) {
 	useEffect(() => {
 		dispatch(setSelection(itemSelectedState));
 		if (itemSelectedState !== null) {
-			setGuess(itemSelectedState.item.Country);
+			// 显示翻译后的国家名称
+			setGuess(tCountries(itemSelectedState.item.Country, itemSelectedState.item.Country));
 			setShowSuggestions(false);
 		}
-	}, [itemSelectedState]);
+	}, [itemSelectedState, tCountries]);
 
 	//Clear input when answer is correct
 	useEffect(() => {
@@ -64,22 +99,32 @@ function GuessInput(props) {
 	}, [guesses]);
 
 	return (
-		<div className="flex flex-col w-full">
+		<div className="flex flex-col w-full guess-input-container">
 			<input
-				className={`border-2 rounded-lg p-2 bg-swamp-800 text-gray-200 border-swamp-700 focus:outline-none ${
-					showSuggestions &&
-					"border-t-swamp-700 border-r-swamp-700 border-l-swamp-700 border-b-0 rounded-b-none"
+				className={`ghibli-input font-medium text-lg ${
+					showSuggestions ? "rounded-b-none" : ""
 				}`}
-				placeholder="Type a country to start"
+				style={{
+					borderColor: isDarkMode ? 'var(--ghibli-blue)' : 'var(--ghibli-soft-blue)',
+					borderBottomWidth: showSuggestions ? '0' : '2px',
+					backgroundColor: isDarkMode ? 'var(--input-background)' : 'white'
+				}}
+				placeholder={tCommon('guessPlaceholder')}
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
-				disabled={isComplete}
+				disabled={props.isDisabled || isComplete}
 			/>
 			<AutoCompleteBox
 				suggestions={suggestions}
-				show={showSuggestions}
+				show={showSuggestions && !props.isDisabled}
 				onItemPress={(item) => setItemSelectedState(item)}
 			/>
+			
+			<style jsx>{`
+				.guess-input-container {
+					position: relative;
+				}
+			`}</style>
 		</div>
 	);
 }

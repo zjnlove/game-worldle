@@ -1,27 +1,73 @@
-import CountrySVG from "../components/countrySVG";
+import CountryMap from "../components/CountryMap";
 import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
 import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
 import Title from "../components/title";
+import Head from "next/head";
 import {
 	NewCountry,
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
 import { setSelection } from "../store/guessSelectionSlice";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-export default function Home() {
+// 添加星星背景
+const addStars = () => {
+	removeStars(); // 先清除现有星星
+	
+	const container = document.querySelector('.min-h-screen');
+	if (!container) return;
+	
+	const starCount = 50;
+	for (let i = 0; i < starCount; i++) {
+		const star = document.createElement('div');
+		star.classList.add('star');
+		star.style.left = `${Math.random() * 100}%`;
+		star.style.top = `${Math.random() * 100}%`;
+		star.style.animationDelay = `${Math.random() * 4}s`;
+		star.style.opacity = Math.random() * 0.7 + 0.3;
+		
+		// 随机大小
+		const size = Math.random() * 2 + 1;
+		star.style.width = `${size}px`;
+		star.style.height = `${size}px`;
+		
+		container.appendChild(star);
+	}
+};
+
+// 移除星星背景
+const removeStars = () => {
+	const stars = document.querySelectorAll('.star');
+	stars.forEach(star => star.remove());
+};
+
+export default function Home({locale}) {
+	const { t } = useTranslation('common', { useSuspense: false }) || { t: key => key };
+	const { t: tIntro } = useTranslation('game-intro', { useSuspense: false }) || { t: key => key };
+	const { t: tFaq } = useTranslation('game-faq', { useSuspense: false }) || { t: key => key };
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
+	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);
 	const isComplete = useSelector((state) => state.settings.value.complete);
-
+	const showModalState = useSelector((state) => state.settings.value.showModal);
+	const [isDarkMode, setIsDarkMode] = useState(false);
+	const [showMoreIntro, setShowMoreIntro] = useState(false);
+	const [expandedFaqIndex, setExpandedFaqIndex] = useState(-1);
+	
+	// 添加猜测次数上限
+	const MAX_GUESSES = 8;
+	const isMaxGuessesReached = guesses.length >= MAX_GUESSES;
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -34,6 +80,40 @@ export default function Home() {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	
+	// 检测当前主题
+	useEffect(() => {
+		const checkDarkMode = () => {
+			const theme = document.documentElement.getAttribute('data-theme');
+			setIsDarkMode(theme === 'dark');
+		};
+		
+		// 初始检测
+		checkDarkMode();
+		
+		// 创建一个观察器监听data-theme属性变化
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					checkDarkMode();
+				}
+			});
+		});
+		
+		// 开始观察
+		observer.observe(document.documentElement, { attributes: true });
+		
+		// 添加星星背景点缀（仅在暗色模式）
+		if (isDarkMode) {
+			addStars();
+		}
+		
+		// 清理观察器和星星
+		return () => {
+			observer.disconnect();
+			removeStars();
+		};
+	}, [isDarkMode]);
 
 	useEffect(() => {
 		if (guesses.length > 0) {
@@ -52,7 +132,7 @@ export default function Home() {
 
 	//Clear input and add guess to redux store
 	const onSubmit = () => {
-		if (guessSelection !== null) {
+		if (guessSelection !== null && !isMaxGuessesReached) {
 			let result = checkGuess(guessSelection, answer);
 
 			//Answer correct
@@ -86,51 +166,351 @@ export default function Home() {
 		}
 	};
 
+	// Make sure the success modal is displayed correctly
+	const modalComponent = <CorrectModal playAgainPress={() => newGame()} />;
+
+	// Ensure the map is only shown during the game or in the modal, avoiding multiple maps at the same time
+	const mapComponent = !showModalState && !isComplete;
+
+	// 安全获取FAQ数据
+	const getFaqItems = () => {
+		try {
+			const faqData = tFaq('faqItems', { returnObjects: true });
+			console.log('FAQ数据类型:', typeof faqData, Array.isArray(faqData));
+			
+			if (Array.isArray(faqData)) {
+				return faqData;
+			} else if (faqData && typeof faqData === 'object') {
+				// 如果返回的是对象而不是数组，尝试转换成数组
+				return Object.values(faqData);
+			} else {
+				console.error('FAQ数据不是数组或对象:', faqData);
+				// 如果数据获取失败，返回空数组避免渲染错误
+				return [];
+			}
+		} catch (error) {
+			console.error('获取FAQ项目时出错:', error);
+			return [];
+		}
+	};
+
 	return (
-		<div className="h-screen flex flex-col justify-between">
-			<div
-				className={
-					"flex flex-col justify-center items-center align-center w-full px-5 mt-5 sm:px-0 sm:w-3/5 lg:w-3/6 xl:w-1/3 2xl:w-1/3 m-auto "
-				}
-			>
-				<CorrectModal playAgainPress={() => newGame()} />
-				<header>
+		<div className="min-h-screen flex flex-col bg-[--background-primary] relative pb-20 transition-colors duration-300">
+			{/* 吉卜力风格的装饰元素 */}
+			<div className={`decorative-element leaf ${isDarkMode ? 'dark' : ''}`}>
+				<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+					<path fill="var(--ghibli-green)" d="M47.1,-57.3C59.8,-47.4,68.9,-32.4,72.1,-16.1C75.3,0.2,72.6,17.8,64.7,31.5C56.7,45.2,43.6,55,29.3,61.9C15,68.9,-0.4,73,-15.6,70.5C-30.7,68,-45.7,58.9,-56.8,45.6C-67.9,32.2,-75.1,14.6,-74.1,-2.5C-73.1,-19.6,-63.8,-36.1,-50.6,-46.5C-37.3,-56.9,-20.2,-61.2,-2.4,-58.4C15.4,-55.7,34.3,-46,47.1,-57.3Z" transform="translate(100 100)" />
+				</svg>
+			</div>
+			
+			<div className={`decorative-element cloud ${isDarkMode ? 'dark' : ''}`}>
+				<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+					<path fill="var(--ghibli-blue)" d="M39.9,-45.7C51.2,-34,59.9,-21,65.4,-5.5C70.9,10,73.2,28,65.7,39.9C58.2,51.8,40.9,57.8,23.8,63C6.7,68.3,-10.1,72.9,-24.9,69C-39.8,65,-52.7,52.6,-59.3,37.7C-65.9,22.8,-66,5.4,-62.3,-10.1C-58.5,-25.7,-50.8,-39.3,-39.5,-51C-28.2,-62.8,-13.3,-72.8,0.1,-72.9C13.6,-73,27.2,-63.2,39.9,-45.7Z" transform="translate(100 100)" />
+				</svg>
+			</div>
+			
+			{/* 仅在暗色模式下添加月亮装饰 */}
+			{isDarkMode && (
+				<div className="moon-decoration">
+					<div className="moon"></div>
+					<div className="moon-glow"></div>
+				</div>
+			)}
+			
+			<div className="flex-1 flex flex-col items-center py-6 px-4 z-10 max-w-2xl mx-auto w-full">
+				{modalComponent}
+				
+				<div className="w-full mb-6 title-container">
 					<Title />
-				</header>
-				<CountrySVG className={"w-1/2 my-10"} />
-				{isComplete ? (
-					<button
-						className="bg-green-700 rounded-md text-lg py-2 px-2 mt-10 animate-shake border-green-800 border-2 text-white "
-						onClick={() => newGame()}
-					>
-						Play Again
-					</button>
-				) : null}
-				{/* <div className={"flex justify-center flex-col items-center w-full"}> */}
-				<GuessInput />
-				<div className={"my-10 w-full "}>
-					<CorrectAnswerBtn onSubmit={() => onSubmit()} />
 				</div>
-				<div className={"w-full sm:w-3/4"}>
-					<Guesses />
+				
+				<div className="w-full flex flex-col items-center">
+					<div className="w-full max-w-md">
+						{mapComponent && (
+							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-4 mb-4 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
+								<CountryMap className={"w-full"} />
+							</div>
+						)}
+						
+						{(isComplete || isMaxGuessesReached) && !showModalState ? (
+							<button
+								className="ghibli-btn text-lg py-3 px-10 mb-4 w-full"
+								onClick={() => newGame()}
+							>
+								{t('playAgain')}
+							</button>
+						) : null}
+						
+						<GuessInput isDisabled={isMaxGuessesReached || isComplete} />
+						
+						{!isComplete && !isMaxGuessesReached && (
+							<div className="w-full my-3">
+								<CorrectAnswerBtn onSubmit={() => onSubmit()} />
+							</div>
+						)}
+						
+						{isMaxGuessesReached && !isComplete && (
+							<div className="w-full my-3 text-center text-[--ghibli-brown] font-medium py-2 bg-red-100 rounded-md border border-red-200">
+								{t('maxGuessesReached')}
+							</div>
+						)}
+						
+						<div className="w-full mt-1">
+							<Guesses />
+						</div>
+						
+						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
+						<div className="w-full mt-10 game-intro-container bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg">
+							<h2 className="text-xl font-bold text-[--text-primary] mb-4">{tIntro('gameIntroTitle')}</h2>
+							
+							<div className="text-[--text-secondary] text-sm space-y-3">
+								<p>{tIntro('gameIntroDesc')}</p>
+								
+								<div className="pt-2">
+									<h3 className="font-medium text-[--text-primary] mb-2">{tIntro('howToPlayTitle')}</h3>
+									<ul className="list-disc list-inside space-y-1">
+										<li>{tIntro('howToPlay1')}</li>
+										<li>{tIntro('howToPlay2')}</li>
+										<li>{tIntro('howToPlay3')}</li>
+										<li>{tIntro('howToPlay4')}</li>
+									</ul>
+								</div>
+								
+								<div className="pt-1">
+									<button 
+										className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-sm flex items-center" 
+										onClick={() => setShowMoreIntro(!showMoreIntro)}
+									>
+										<span>{tIntro('readMore')}</span>
+										<svg 
+											xmlns="http://www.w3.org/2000/svg" 
+											className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
+											fill="none" 
+											viewBox="0 0 24 24" 
+											stroke="currentColor"
+										>
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+										</svg>
+									</button>
+									
+									{showMoreIntro && (
+										<div className="mt-3 space-y-3 animate-fadeIn">
+											<p>{tIntro('gameIntroExtended')}</p>
+											<p>{tIntro('gameFeatures')}</p>
+										</div>
+									)}
+								</div>
+							</div>
+						</div>
+						
+						{/* FAQ部分 */}
+						<div className="w-full mt-8 bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300">
+							<h2 className="text-xl font-bold text-[--text-primary] mb-6">{tFaq('faqTitle')}</h2>
+							
+							<div className="space-y-1">
+								{getFaqItems().map((item, index) => (
+									<div key={index} className="border-b border-[--border-color]">
+										<button 
+											className="w-full py-4 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
+											onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
+										>
+											<span>{item.question}</span>
+											<svg 
+												xmlns="http://www.w3.org/2000/svg" 
+												className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
+												fill="none" 
+												viewBox="0 0 24 24" 
+												stroke="currentColor"
+											>
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
+										</button>
+										
+										{expandedFaqIndex === index && (
+											<div className="pb-4 text-[--text-secondary] text-sm animate-fadeIn">
+												<p>{item.answer}</p>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
 				</div>
-				{/* </div> */}
 			</div>
-			<div
-				className={
-					" flex w-full -scroll-mt-9 pt-10 md:pr-2 md:mb-2 justify-center lg:justify-end"
+			
+			{!isComplete && !isMaxGuessesReached && (
+				<footer className="py-6 px-6 flex justify-center w-full fixed bottom-0 left-0 bg-[--background-primary] z-20 shadow-inner border-t border-[--border-color] transition-colors duration-300">
+					<div className="w-full max-w-md">
+						<button
+							className="ghibli-btn-secondary w-full text-base py-6 h-14 flex items-center justify-center"
+							onClick={() => newGame()}
+						>
+							{t('newCountry')}
+						</button>
+					</div>
+				</footer>
+			)}
+			
+			<style jsx>{`
+				.map-container {
+					background-color: white !important;
+					transition: all 0.3s ease;
 				}
-			>
-				<button
-					className="text-swamp-800 rounded-md px-2 pb-0.5 pt-.5 font-bold border-2 border-swamp-800"
-					onClick={() => newGame()}
-				>
-					Reset - New Country
-				</button>
-			</div>
+				
+				.dark-map-container {
+					background-color: var(--ghibli-dark-blue) !important;
+					border-color: transparent !important;
+					box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(101, 165, 209, 0.15);
+				}
+				
+				.decorative-element {
+					position: absolute;
+					opacity: 0.2;
+					transition: all 0.5s ease;
+				}
+				
+				.leaf {
+					top: 0;
+					left: 0;
+					width: 20%;
+					max-width: 150px;
+					transform: rotate(-12deg);
+				}
+				
+				.cloud {
+					bottom: 0;
+					right: 0;
+					width: 25%;
+					max-width: 180px;
+				}
+				
+				/* 暗色模式的装饰元素调整 */
+				.decorative-element.dark {
+					opacity: 0.1;
+				}
+				
+				/* 月亮装饰 */
+				.moon-decoration {
+					position: absolute;
+					top: 30px;
+					right: 10%;
+					z-index: 1;
+				}
+				
+				.moon {
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					background: #e9e2d5;
+					box-shadow: 0 0 20px rgba(233, 226, 213, 0.4);
+				}
+				
+				.moon-glow {
+					position: absolute;
+					top: -10px;
+					left: -10px;
+					right: -10px;
+					bottom: -10px;
+					border-radius: 50%;
+					background: radial-gradient(circle, rgba(233, 226, 213, 0.3) 0%, rgba(233, 226, 213, 0) 70%);
+				}
+				
+				/* 游戏介绍区域样式 */
+				.game-intro-container {
+					position: relative;
+					overflow: hidden;
+					transition: all 0.3s ease;
+				}
+				
+				.game-intro-container::before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 4px;
+					background: linear-gradient(90deg, var(--ghibli-primary) 0%, var(--ghibli-secondary) 100%);
+					opacity: 0.7;
+				}
+				
+				.game-intro-container:hover::before {
+					opacity: 1;
+				}
+				
+				/* 为展开内容添加淡入效果 */
+				@keyframes fadeIn {
+					from { opacity: 0; transform: translateY(-10px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+				
+				.animate-fadeIn {
+					animation: fadeIn 0.3s ease forwards;
+				}
+				
+				/* 暗色主题星星动画 */
+				@keyframes twinkle {
+					0% {
+						opacity: 0.3;
+						transform: scale(1);
+					}
+					50% {
+						opacity: 0.8;
+						transform: scale(1.2);
+					}
+					100% {
+						opacity: 0.3;
+						transform: scale(1);
+					}
+				}
+				
+				@media (max-width: 480px) {
+					.title-container {
+						margin-top: 20px;
+						margin-bottom: 30px;
+					}
+					
+					.py-6 {
+						padding-top: 1rem;
+						padding-bottom: 1rem;
+					}
+					
+					.map-container {
+						margin-bottom: 1rem;
+						padding: 0.75rem;
+					}
+				}
+			`}</style>
 		</div>
 	);
 }
-export async function getServerSideProps(context) {
-	return { props: {} };
+
+export async function getServerSideProps({ locale }) {
+	// 定义首页使用的结构化数据
+	const structuredData = {
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		"name": "Worldle",
+		"description": "A geography game where you guess countries from their silhouette",
+		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com',
+		"applicationCategory": "GameApplication",
+		"genre": "Geography Quiz",
+		"operatingSystem": "Web Browser",
+		"offers": {
+			"@type": "Offer",
+			"price": "0",
+			"priceCurrency": "USD"
+		}
+	};
+
+	return {
+		props: {
+			...(await serverSideTranslations(locale, ['common', 'countries', 'game-intro', 'game-faq'])),
+			locale,
+			// 添加SEO相关数据
+			structuredData,
+			canonicalPath: '/',
+			ogImage: 'worldle-og-image.png'
+		},
+	};
 }

@@ -1,29 +1,57 @@
-import React, { useEffect, useState, useRef, createRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Suggestion from "./suggestion";
 
 function AutoCompleteBox(props) {
+	const { suggestions, onItemPress, show: showProp } = props;
 	const [show, setShow] = useState(false);
 	const [suggestionsLength, setSuggestionsLength] = useState(0);
 	const [focusIndex, setFocusIndex] = useState(0);
 	const [index, setIndex] = useState(0);
+	const [isDarkMode, setIsDarkMode] = useState(false);
+	
+	// 检测当前主题
+	useEffect(() => {
+		const checkDarkMode = () => {
+			const theme = document.documentElement.getAttribute('data-theme');
+			setIsDarkMode(theme === 'dark');
+		};
+		
+		// 初始检测
+		checkDarkMode();
+		
+		// 创建一个观察器监听data-theme属性变化
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					checkDarkMode();
+				}
+			});
+		});
+		
+		// 开始观察
+		observer.observe(document.documentElement, { attributes: true });
+		
+		// 清理观察器
+		return () => observer.disconnect();
+	}, []);
 
 	//Check if any suggestions are passed
 	useEffect(() => {
-		if (props.suggestions.length > 0 && props.show) {
+		if (suggestions.length > 0 && showProp) {
 			setShow(true);
 		} else {
 			setShow(false);
 			setFocusIndex(0);
-			// window.removeEventListener("keydown", preventDefault, false);
 		}
-	}, [props.suggestions, props.show]);
+	}, [suggestions, showProp]);
 
 	useEffect(() => {
-		setSuggestionsLength(props.suggestions.length);
+		setSuggestionsLength(suggestions.length);
 		setIndex(0);
 		setFocusIndex(0);
-	}, [props.suggestions]);
+	}, [suggestions]);
+	
 	useEffect(() => {}, [suggestionsLength]);
 
 	useEffect(() => {
@@ -36,21 +64,21 @@ function AutoCompleteBox(props) {
 				e.preventDefault();
 				add = -1;
 			} else if (e.code === "Enter") {
-				if (index > 0 && index < props.suggestions.length) {
+				if (index > 0 && index < suggestions.length) {
 					e.preventDefault();
-					props.onItemPress(props.suggestions[index - 1]);
+					onItemPress(suggestions[index - 1]);
 				}
 			}
 
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			setIndex((index += add));
+			// 使用函数式更新，而不是修改 index
+			setIndex(prevIndex => prevIndex + add);
 		};
 
 		window.addEventListener("keydown", preventDefault, false);
 		return () => {
 			window.removeEventListener("keydown", preventDefault, false);
 		};
-	}, [index]);
+	}, [index, suggestions, onItemPress]);
 
 	useEffect(() => {
 		setFocusIndex(index);
@@ -65,22 +93,43 @@ function AutoCompleteBox(props) {
 	}, [suggestionsLength, index]);
 
 	return (
-		<div className="w-full relative ">
-			<div className={`${show ? "absolute w-full z-10 " : "hidden"}`}>
-				{props.suggestions.map((item, index) => {
+		<div className="w-full relative">
+			<div 
+				className={`${show ? "suggestions-container" : "hidden"}`}
+				style={{
+					boxShadow: isDarkMode ? '0 6px 16px rgba(0, 0, 0, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
+				}}
+			>
+				{suggestions.map((item, idx) => {
 					return (
 						<Suggestion
-							key={index}
-							onItemPress={(item) => props.onItemPress(item)}
+							key={idx}
+							onItemPress={(item) => onItemPress(item)}
 							item={item}
 							roundedBottom={
-								props.suggestions.length - 1 === index
+								suggestions.length - 1 === idx
 							}
-							focus={focusIndex - 1 === index}
-						></Suggestion>
+							focus={focusIndex - 1 === idx}
+						/>
 					);
 				})}
 			</div>
+			
+			<style jsx>{`
+				.suggestions-container {
+					position: absolute;
+					width: 100%;
+					z-index: 20;
+					border-radius: 0 0 0.375rem 0.375rem;
+					overflow: hidden;
+					animation: dropdownFadeIn 0.2s ease;
+				}
+				
+				@keyframes dropdownFadeIn {
+					from { opacity: 0; transform: translateY(-5px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+			`}</style>
 		</div>
 	);
 }

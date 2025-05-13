@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
 function Title(props) {
+	const { t } = useTranslation('common');
 	const [animationStage, setAnimationStage] = useState(0);
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	let interval = useRef();
@@ -25,76 +29,82 @@ function Title(props) {
 		}
 	}, [animationStage]);
 
-	return (
-		<h1
-			className={
-				"text-center text-6xl font-semibold flex flex-row uppercase"
-			}
+	const titleLetter = (letter, color, delay) => (
+		<span 
+			className="ghibli-title-letter"
+			style={{ 
+				color: `var(--ghibli-${color})`,
+				animationDelay: `${delay}ms`,
+				textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)'
+			}}
 		>
-			<div
-				className={`text-red-700 ${
-					animationStage >= 1 && "animate-upDown"
-				}`}
-			>
-				c
+			{letter}
+		</span>
+	);
+
+	// 获取标题文本
+	const titleText = t('title');
+	
+	// 标题颜色数组
+	const colors = ['green', 'blue', 'brown', 'dark', 'soft-blue', 'soft-green', 'green'];
+
+	return (
+		<div className="relative">
+			<div className="theme-container">
+				<ThemeToggle />
 			</div>
-			<div
-				className={`text-orange-700 ${
-					animationStage >= 2 && "animate-upDown"
-				}`}
-			>
-				o
+			<div className="language-container">
+				<LanguageSwitcher />
 			</div>
-			<div
-				className={`text-yellow-700  ${
-					animationStage >= 3 && "animate-upDown"
-				}`}
-			>
-				u
-			</div>
-			<div
-				className={`text-lime-700 ${
-					animationStage >= 4 && "animate-upDown"
-				}`}
-			>
-				n
-			</div>
-			<div
-				className={`text-green-700 ${
-					animationStage >= 5 && "animate-upDown"
-				}`}
-			>
-				t
-			</div>
-			<div
-				className={`text-cyan-700 ${
-					animationStage >= 6 && "animate-upDown"
-				}`}
-			>
-				r
-			</div>
-			<div
-				className={`text-blue-700 ${
-					animationStage >= 7 && "animate-upDown"
-				}`}
-			>
-				y
-			</div>
-			<div
-				className={`text-indigo-700 ${
-					animationStage >= 8 && "animate-upDown"
-				}`}
-			>
-				l
-			</div>
-			<div
-				className={`text-violet-700 ${
-					animationStage >= 9 && "animate-upDown"
-				}`}
-			>
-				e
-			</div>
-		</h1>
+			<h1 className="text-center text-6xl font-bold flex flex-row justify-center space-x-1 py-6">
+				{titleText.split('').map((letter, index) => {
+					const colorIndex = index % colors.length;
+					return titleLetter(letter, colors[colorIndex], (index + 1) * 100);
+				})}
+			</h1>
+			
+			<style jsx>{`
+				.theme-container {
+					position: absolute;
+					right: 50px;
+					top: 50%;
+					transform: translateY(-50%);
+					z-index: 5;
+				}
+				
+				.language-container {
+					position: absolute;
+					right: -70px;
+					top: 50%;
+					transform: translateY(-50%);
+					z-index: 5;
+				}
+				
+				@media (max-width: 768px) {
+					.theme-container {
+						right: auto;
+						left: 10px;
+						top: 50%;
+					}
+					
+					.language-container {
+						right: 10px;
+						top: 50%;
+					}
+					
+					h1 {
+						font-size: 2.5rem;
+						padding: 1rem 0;
+					}
+				}
+				
+				@media (max-width: 480px) {
+					h1 {
+						font-size: 2rem;
+					}
+				}
+			`}</style>
+		</div>
 	);
 }
 
