@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./modal";
-import CountrySVG from "../WorldSVG";
+import CountrySVG from "../CountryMap";
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import { showModal } from "../../store/settingsSlice";

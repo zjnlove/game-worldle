@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from "react";
 import Fuse from "fuse.js";
-import { CountryCoords } from "../data/countryCoords";
+import { CountryCoords } from "../data/countrycodes";
 import AutoCompleteBox from "./autoCompleteBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelection } from "../../store/guessSelectionSlice";
