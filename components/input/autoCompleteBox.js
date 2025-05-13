@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Suggestion from "./suggestion";
 
 function AutoCompleteBox(props) {
+	const { suggestions, onItemPress, show: showProp } = props;
 	const [show, setShow] = useState(false);
 	const [suggestionsLength, setSuggestionsLength] = useState(0);
 	const [focusIndex, setFocusIndex] = useState(0);
@@ -37,19 +38,19 @@ function AutoCompleteBox(props) {
 
 	//Check if any suggestions are passed
 	useEffect(() => {
-		if (props.suggestions.length > 0 && props.show) {
+		if (suggestions.length > 0 && showProp) {
 			setShow(true);
 		} else {
 			setShow(false);
 			setFocusIndex(0);
 		}
-	}, [props.suggestions, props.show]);
+	}, [suggestions, showProp]);
 
 	useEffect(() => {
-		setSuggestionsLength(props.suggestions.length);
+		setSuggestionsLength(suggestions.length);
 		setIndex(0);
 		setFocusIndex(0);
-	}, [props.suggestions]);
+	}, [suggestions]);
 	
 	useEffect(() => {}, [suggestionsLength]);
 
@@ -63,9 +64,9 @@ function AutoCompleteBox(props) {
 				e.preventDefault();
 				add = -1;
 			} else if (e.code === "Enter") {
-				if (index > 0 && index < props.suggestions.length) {
+				if (index > 0 && index < suggestions.length) {
 					e.preventDefault();
-					props.onItemPress(props.suggestions[index - 1]);
+					onItemPress(suggestions[index - 1]);
 				}
 			}
 
@@ -77,7 +78,7 @@ function AutoCompleteBox(props) {
 		return () => {
 			window.removeEventListener("keydown", preventDefault, false);
 		};
-	}, [index, props.suggestions, props.onItemPress]);
+	}, [index, suggestions, onItemPress]);
 
 	useEffect(() => {
 		setFocusIndex(index);
@@ -99,14 +100,14 @@ function AutoCompleteBox(props) {
 					boxShadow: isDarkMode ? '0 6px 16px rgba(0, 0, 0, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
 				}}
 			>
-				{props.suggestions.map((item, idx) => {
+				{suggestions.map((item, idx) => {
 					return (
 						<Suggestion
 							key={idx}
-							onItemPress={(item) => props.onItemPress(item)}
+							onItemPress={(item) => onItemPress(item)}
 							item={item}
 							roundedBottom={
-								props.suggestions.length - 1 === idx
+								suggestions.length - 1 === idx
 							}
 							focus={focusIndex - 1 === idx}
 						/>
