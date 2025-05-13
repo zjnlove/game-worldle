@@ -340,10 +340,10 @@ export default function Home({locale}) {
 			</div>
 			
 			{!isComplete && !isMaxGuessesReached && (
-				<footer className="py-4 px-6 flex justify-center w-full fixed bottom-0 left-0 bg-[--background-primary] z-20 shadow-inner border-t border-[--border-color] transition-colors duration-300">
+				<footer className="py-6 px-6 flex justify-center w-full fixed bottom-0 left-0 bg-[--background-primary] z-20 shadow-inner border-t border-[--border-color] transition-colors duration-300">
 					<div className="w-full max-w-md">
 						<button
-							className="ghibli-btn-secondary w-full text-sm py-2"
+							className="ghibli-btn-secondary w-full text-base py-6 h-14 flex items-center justify-center"
 							onClick={() => newGame()}
 						>
 							{t('newCountry')}

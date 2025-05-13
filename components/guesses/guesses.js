@@ -20,7 +20,7 @@ function Guesses(props) {
 					))}
 				</div>
 			) : (
-				<div className="text-center text-gray-500 italic mt-4">
+				<div className="text-center text-gray-500 italic mt-8">
 					{t('startGuessing')}
 				</div>
 			)}

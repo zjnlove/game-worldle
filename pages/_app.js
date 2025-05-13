@@ -32,14 +32,14 @@ function MyApp({ Component, pageProps }) {
 					<meta property="og:description" content={pageDescription} />
 					<meta property="og:type" content="website" />
 					<meta property="og:url" content={`${siteUrl}${pageProps.canonicalPath || ''}`} />
-					<meta property="og:image" content={`${siteUrl}/${pageProps.ogImage || 'favicon-32x32.png'}`} />
+					<meta property="og:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
 					<meta property="og:locale" content={pageProps.locale || 'en'} />
 					
 					{/* Twitter 卡片 */}
 					<meta name="twitter:card" content="summary_large_image" />
 					<meta name="twitter:title" content={`Worldle - ${pageTitle}`} />
 					<meta name="twitter:description" content={pageDescription} />
-					<meta name="twitter:image" content={`${siteUrl}/${pageProps.ogImage || 'favicon-32x32.png'}`} />
+					<meta name="twitter:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
 					
 					{/* 移动设备元标签 */}
 					<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
