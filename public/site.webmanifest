@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Worldle - 猜国家游戏",
+    "short_name": "Worldle",
+    "description": "一个根据国家轮廓猜测国家的地理游戏",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -15,5 +16,7 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
 }

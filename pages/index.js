@@ -4,6 +4,7 @@ import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
 import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
 import Title from "../components/title";
+import Head from "next/head";
 import {
 	NewCountry,
 	checkGuess,
@@ -49,11 +50,12 @@ const removeStars = () => {
 };
 
 export default function Home({locale}) {
-	const { t } = useTranslation('common');
-	const { t: tIntro } = useTranslation('game-intro');
-	const { t: tFaq } = useTranslation('game-faq');
+	const { t } = useTranslation('common', { useSuspense: false }) || { t: key => key };
+	const { t: tIntro } = useTranslation('game-intro', { useSuspense: false }) || { t: key => key };
+	const { t: tFaq } = useTranslation('game-faq', { useSuspense: false }) || { t: key => key };
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
+	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);
 	const isComplete = useSelector((state) => state.settings.value.complete);
@@ -259,7 +261,7 @@ export default function Home({locale}) {
 						
 						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
 						<div className="w-full mt-10 game-intro-container bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg">
-							<h2 className="text-xl font-medium text-[--text-primary] mb-4">{tIntro('gameIntroTitle')}</h2>
+							<h2 className="text-xl font-bold text-[--text-primary] mb-4">{tIntro('gameIntroTitle')}</h2>
 							
 							<div className="text-[--text-secondary] text-sm space-y-3">
 								<p>{tIntro('gameIntroDesc')}</p>
@@ -303,7 +305,7 @@ export default function Home({locale}) {
 						
 						{/* FAQ部分 */}
 						<div className="w-full mt-8 bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300">
-							<h2 className="text-xl font-medium text-[--text-primary] mb-6">{tFaq('faqTitle')}</h2>
+							<h2 className="text-xl font-bold text-[--text-primary] mb-6">{tFaq('faqTitle')}</h2>
 							
 							<div className="space-y-1">
 								{getFaqItems().map((item, index) => (
@@ -484,10 +486,31 @@ export default function Home({locale}) {
 }
 
 export async function getServerSideProps({ locale }) {
+	// 定义首页使用的结构化数据
+	const structuredData = {
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		"name": "Worldle",
+		"description": "A geography game where you guess countries from their silhouette",
+		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com',
+		"applicationCategory": "GameApplication",
+		"genre": "Geography Quiz",
+		"operatingSystem": "Web Browser",
+		"offers": {
+			"@type": "Offer",
+			"price": "0",
+			"priceCurrency": "USD"
+		}
+	};
+
 	return {
 		props: {
 			...(await serverSideTranslations(locale, ['common', 'countries', 'game-intro', 'game-faq'])),
 			locale,
+			// 添加SEO相关数据
+			structuredData,
+			canonicalPath: '/',
+			ogImage: 'worldle-og-image.png'
 		},
 	};
 }

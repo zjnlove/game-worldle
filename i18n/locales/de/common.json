@@ -13,5 +13,9 @@
   "close": "Schließen",
   "checking": "Überprüfung",
   "startGuessing": "Beginne Länder zu raten...",
-  "maxGuessesReached": "Maximale Versuche erreicht!"  
+  "maxGuessesReached": "Maximale Versuche erreicht!",
+  
+  "seoTitle": "Errate das Land anhand seiner Form",
+  "seoDescription": "Teste dein Geographiewissen mit Worldle, einem unterhaltsamen Spiel, bei dem du Länder anhand ihrer Silhouette errätst. Stelle dich täglichen Herausforderungen und verbessere deine Geographiekenntnisse.",
+  "seoKeywords": "worldle, wordle, Geographiespiel, Länderquiz, Land erraten, Kartenspiel, Lernspiel"
 } 

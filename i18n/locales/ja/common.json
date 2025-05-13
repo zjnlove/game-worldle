@@ -13,5 +13,9 @@
   "close": "閉じる",
   "checking": "確認中",
   "startGuessing": "国を予想してみましょう...",
-  "maxGuessesReached": "最大予想回数に達しました！"
+  "maxGuessesReached": "最大予想回数に達しました！",
+  
+  "seoTitle": "シルエットから国を当てよう",
+  "seoDescription": "Worldleで地理知識をテストしよう。国のシルエットから国名を当てる楽しいゲームです。毎日のチャレンジに参加して、地理スキルを向上させましょう。",
+  "seoKeywords": "worldle, wordle, 地理ゲーム, 国クイズ, 国当てゲーム, 地図ゲーム, 教育ゲーム"
 } 

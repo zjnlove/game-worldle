@@ -13,5 +13,9 @@
   "close": "Fermer",
   "checking": "Vérification",
   "startGuessing": "Commencez à deviner des pays...",
-  "maxGuessesReached": "Maximum de suppositions atteint !"
+  "maxGuessesReached": "Maximum de suppositions atteint !",
+  
+  "seoTitle": "Devinez le pays à partir de sa forme",
+  "seoDescription": "Testez vos connaissances en géographie avec Worldle, un jeu amusant où vous devinez les pays à partir de leur silhouette. Relevez des défis quotidiens et améliorez vos compétences en géographie.",
+  "seoKeywords": "worldle, wordle, jeu de géographie, quiz des pays, deviner le pays, jeu de carte, jeu éducatif"
 } 

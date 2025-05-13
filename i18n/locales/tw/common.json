@@ -13,5 +13,9 @@
   "close": "關閉",
   "checking": "檢查中",
   "startGuessing": "開始猜測國家...",
-  "maxGuessesReached": "已達到最大猜測次數！"   
+  "maxGuessesReached": "已達到最大猜測次數！",
+  
+  "seoTitle": "根據輪廓猜國家",
+  "seoDescription": "測試您的地理知識，猜猜國家輪廓，提高您的地理技能。每天挑戰不同國家，增進您的世界地理知識！",
+  "seoKeywords": "worldle, wordle, 地理遊戲, 國家測驗, 猜國家, 地圖遊戲, 教育遊戲"
 } 
