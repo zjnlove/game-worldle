@@ -12,5 +12,6 @@
   "tryAgain": "Erneut versuchen",
   "close": "Schließen",
   "checking": "Überprüfung",
-  "startGuessing": "Beginne Länder zu raten..."
+  "startGuessing": "Beginne Länder zu raten...",
+  "maxGuessesReached": "Maximale Versuche erreicht!"  
 } 

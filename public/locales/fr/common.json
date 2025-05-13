@@ -12,5 +12,6 @@
   "tryAgain": "Réessayer",
   "close": "Fermer",
   "checking": "Vérification",
-  "startGuessing": "Commencez à deviner des pays..."
+  "startGuessing": "Commencez à deviner des pays...",
+  "maxGuessesReached": "Maximum de suppositions atteint !"
 } 

@@ -27,6 +27,10 @@ export default function Home() {
 	const showModalState = useSelector((state) => state.settings.value.showModal);
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	
+	// 添加猜测次数上限
+	const MAX_GUESSES = 8;
+	const isMaxGuessesReached = guesses.length >= MAX_GUESSES;
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -122,7 +126,7 @@ export default function Home() {
 
 	//Clear input and add guess to redux store
 	const onSubmit = () => {
-		if (guessSelection !== null) {
+		if (guessSelection !== null && !isMaxGuessesReached) {
 			let result = checkGuess(guessSelection, answer);
 
 			//Answer correct
@@ -200,7 +204,7 @@ export default function Home() {
 							</div>
 						)}
 						
-						{isComplete && !showModalState ? (
+						{(isComplete || isMaxGuessesReached) && !showModalState ? (
 							<button
 								className="ghibli-btn text-lg py-3 px-10 mb-4 w-full"
 								onClick={() => newGame()}
@@ -209,11 +213,17 @@ export default function Home() {
 							</button>
 						) : null}
 						
-						<GuessInput />
+						<GuessInput isDisabled={isMaxGuessesReached || isComplete} />
 						
-						{!isComplete && (
+						{!isComplete && !isMaxGuessesReached && (
 							<div className="w-full my-3">
 								<CorrectAnswerBtn onSubmit={() => onSubmit()} />
+							</div>
+						)}
+						
+						{isMaxGuessesReached && !isComplete && (
+							<div className="w-full my-3 text-center text-[--ghibli-brown] font-medium py-2 bg-red-100 rounded-md border border-red-200">
+								{t('maxGuessesReached')}
 							</div>
 						)}
 						
@@ -224,7 +234,7 @@ export default function Home() {
 				</div>
 			</div>
 			
-			{!isComplete && (
+			{!isComplete && !isMaxGuessesReached && (
 				<footer className="py-4 px-6 flex justify-center w-full fixed bottom-0 left-0 bg-[--background-primary] z-20 shadow-inner border-t border-[--border-color] transition-colors duration-300">
 					<div className="w-full max-w-md">
 						<button

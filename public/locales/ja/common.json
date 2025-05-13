@@ -12,5 +12,6 @@
   "tryAgain": "再挑戦",
   "close": "閉じる",
   "checking": "確認中",
-  "startGuessing": "国を予想してみましょう..."
+  "startGuessing": "国を予想してみましょう...",
+  "maxGuessesReached": "最大予想回数に達しました！"
 } 

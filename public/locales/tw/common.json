@@ -12,5 +12,6 @@
   "tryAgain": "再試一次",
   "close": "關閉",
   "checking": "檢查中",
-  "startGuessing": "開始猜測國家..."
+  "startGuessing": "開始猜測國家...",
+  "maxGuessesReached": "已達到最大猜測次數！"   
 } 

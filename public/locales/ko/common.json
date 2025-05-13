@@ -12,5 +12,6 @@
   "tryAgain": "다시 시도",
   "close": "닫기",
   "checking": "확인 중",
-  "startGuessing": "국가 추측 시작..."
+  "startGuessing": "국가 추측 시작...",
+  "maxGuessesReached": "최대 추측 횟수에 도달했습니다!"
 } 

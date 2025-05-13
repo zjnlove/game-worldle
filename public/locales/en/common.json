@@ -12,5 +12,6 @@
   "tryAgain": "Try Again",
   "close": "Close",
   "checking": "Checking",
-  "startGuessing": "Start guessing countries..."
+  "startGuessing": "Start guessing countries...",
+  "maxGuessesReached": "Maximum guesses reached!"
 } 

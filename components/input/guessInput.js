@@ -112,11 +112,11 @@ function GuessInput(props) {
 				placeholder={tCommon('guessPlaceholder')}
 				onChange={(event) => onType(event.target.value)}
 				value={guess}
-				disabled={isComplete}
+				disabled={props.isDisabled || isComplete}
 			/>
 			<AutoCompleteBox
 				suggestions={suggestions}
-				show={showSuggestions}
+				show={showSuggestions && !props.isDisabled}
 				onItemPress={(item) => setItemSelectedState(item)}
 			/>
 			
