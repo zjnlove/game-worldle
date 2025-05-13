@@ -1,0 +1,12 @@
+{
+  "gameIntroTitle": "Worldle - Global Geography Guessing Game",
+  "gameIntroDesc": "Welcome to Worldle, an engaging geography knowledge challenge game. In each game, you will see the silhouette of a country or region, and you need to guess which country it is based on its shape.",
+  "howToPlayTitle": "How to Play",
+  "howToPlay1": "Observe the displayed country silhouette",
+  "howToPlay2": "Enter your guess in the input box",
+  "howToPlay3": "The system will tell you the distance and direction of your guess",
+  "howToPlay4": "You have 8 chances to guess correctly",
+  "readMore": "Read More",
+  "gameIntroExtended": "Worldle is not just a game, but also an excellent tool for learning world geography. Through playing, you can gradually become familiar with the shapes and relative positions of countries around the world, improving your geographical knowledge and spatial awareness.",
+  "gameFeatures": "Game features: daily updated puzzles, beautiful Ghibli-style interface, multi-language support, day/night mode switching. Whether you are a geography enthusiast or a student looking to expand your knowledge, Worldle can provide you with an engaging geographical learning experience."
+} 

@@ -1,0 +1,49 @@
+{
+  "faqTitle": "Häufig gestellte Fragen",
+  "faqItems": [
+    {
+      "question": "Wie spielt man dieses Spiel?",
+      "answer": "Sie müssen anhand der Umrisse erraten, um welches Land/Region es sich handelt. Sie haben 8 Rateversuche für jede Karte."
+    },
+    {
+      "question": "Kann ich dieses Spiel jederzeit spielen?",
+      "answer": "Ja, Sie können jederzeit ein neues Spiel starten, ohne auf tägliche Updates warten zu müssen."
+    },
+    {
+      "question": "Gibt es ein Limit für Rateversuche?",
+      "answer": "Sie haben maximal 8 Rateversuche pro Karte. Danach können Sie auf 'Erneut spielen' klicken, um ein neues Spiel zu starten."
+    },
+    {
+      "question": "Was passiert, wenn ich alle meine Rateversuche aufgebraucht habe?",
+      "answer": "Nachdem Sie alle 8 Rateversuche verwendet haben, können Sie auf 'Erneut spielen' klicken, um ein neues Spiel zu starten, und das System generiert zufällig ein neues Länderrätsel."
+    },
+    {
+      "question": "Warum sind Ihre Daten falsch oder veraltet?",
+      "answer": "Wir bemühen uns, die Genauigkeit zu erhalten, aber geografische Informationen können sich im Laufe der Zeit ändern. Bitte informieren Sie uns, wenn Sie Fehler finden."
+    },
+    {
+      "question": "Was bedeuten die grünen und gelben Quadrate?",
+      "answer": "Grün zeigt an, dass Sie den Kontinent richtig erraten haben, während Gelb bedeutet, dass Ihr geratenes Land relativ nahe am Zielland liegt."
+    },
+    {
+      "question": "Was ist der Näherungsprozentsatz?",
+      "answer": "Der Näherungsprozentsatz zeigt, wie nahe Ihre Vermutung am Zielland liegt, wobei 100% eine perfekte Übereinstimmung anzeigt."
+    },
+    {
+      "question": "Wie wird die Entfernung berechnet?",
+      "answer": "Wir berechnen die Luftlinie (in Kilometern) zwischen den Hauptstädten der beiden Länder."
+    },
+    {
+      "question": "Warum ist ein bestimmtes Land keine gültige Antwort?",
+      "answer": "Unsere Datenbank enthält von der UN anerkannte Länder; einige Territorien oder umstrittene Regionen sind möglicherweise nicht enthalten."
+    },
+    {
+      "question": "Wie werden Länder oder Regionen ausgewählt?",
+      "answer": "Das Spiel wählt zufällig ein Land als Rätsel aus. Sie können jederzeit ein neues Spiel starten, um ein neues Rätsel zu erhalten."
+    },
+    {
+      "question": "Wie installiere ich Worldle auf meinem Handy?",
+      "answer": "Öffnen Sie die Website in Ihrem mobilen Browser und wählen Sie dann die Option 'Zum Startbildschirm hinzufügen'."
+    }
+  ]
+} 

@@ -1,0 +1,49 @@
+{
+  "faqTitle": "Questions fréquemment posées",
+  "faqItems": [
+    {
+      "question": "Comment jouer à ce jeu ?",
+      "answer": "Vous devez deviner quel pays/région est représenté par son contour. Vous avez 8 essais pour chaque carte."
+    },
+    {
+      "question": "Puis-je jouer à ce jeu à tout moment ?",
+      "answer": "Oui, vous pouvez commencer une nouvelle partie à tout moment sans attendre les mises à jour quotidiennes."
+    },
+    {
+      "question": "Y a-t-il une limite d'essais ?",
+      "answer": "Vous avez un maximum de 8 essais pour chaque carte. Après cela, vous pouvez cliquer sur le bouton 'Rejouer' pour commencer une nouvelle partie."
+    },
+    {
+      "question": "Que se passe-t-il si j'utilise tous mes essais ?",
+      "answer": "Après avoir utilisé les 8 essais, vous pouvez cliquer sur le bouton 'Rejouer' pour commencer une nouvelle partie, et le système générera aléatoirement une nouvelle énigme de pays."
+    },
+    {
+      "question": "Pourquoi vos données sont-elles incorrectes ou obsolètes ?",
+      "answer": "Nous nous efforçons de maintenir l'exactitude, mais les informations géographiques peuvent changer avec le temps. Veuillez nous informer si vous trouvez des erreurs."
+    },
+    {
+      "question": "Que signifient les carrés verts et jaunes ?",
+      "answer": "Le vert indique que vous avez correctement deviné le continent, tandis que le jaune signifie que votre pays deviné est relativement proche du pays cible."
+    },
+    {
+      "question": "Qu'est-ce que le pourcentage de proximité ?",
+      "answer": "Le pourcentage de proximité indique à quel point votre supposition est proche du pays cible, 100% indiquant une correspondance parfaite."
+    },
+    {
+      "question": "Comment la distance est-elle calculée ?",
+      "answer": "Nous calculons la distance en ligne droite (en kilomètres) entre les capitales des deux pays."
+    },
+    {
+      "question": "Pourquoi un certain pays n'est-il pas une réponse valide ?",
+      "answer": "Notre base de données comprend les pays reconnus par l'ONU ; certains territoires ou régions contestées peuvent ne pas être inclus."
+    },
+    {
+      "question": "Comment les pays ou régions sont-ils sélectionnés ?",
+      "answer": "Le jeu sélectionne aléatoirement un pays comme énigme. Vous pouvez commencer une nouvelle partie à tout moment pour obtenir une nouvelle énigme."
+    },
+    {
+      "question": "Comment installer Worldle sur mon téléphone ?",
+      "answer": "Ouvrez le site Web dans votre navigateur mobile, puis sélectionnez l'option 'Ajouter à l'écran d'accueil'."
+    }
+  ]
+} 

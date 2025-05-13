@@ -1,0 +1,49 @@
+{
+  "faqTitle": "FAQ",
+  "faqItems": [
+    {
+      "question": "How do you play this game?",
+      "answer": "You need to guess which country/region is shown by its outline. You have 8 guesses for each map."
+    },
+    {
+      "question": "Can I play this game anytime?",
+      "answer": "Yes, you can start a new game anytime without waiting for daily updates."
+    },
+    {
+      "question": "Is there a limit to guesses?",
+      "answer": "You have a maximum of 8 guesses for each map. After that, you can click the 'Play Again' button to start a new game."
+    },
+    {
+      "question": "What happens if I use all my guesses?",
+      "answer": "After using all 8 guesses, you can click the 'Play Again' button to start a new game with a randomly generated country puzzle."
+    },
+    {
+      "question": "Why is your data incorrect or outdated?",
+      "answer": "We try to maintain accuracy, but geographic information may change over time. Please let us know if you find any errors."
+    },
+    {
+      "question": "What do the green and yellow squares mean?",
+      "answer": "Green indicates you've correctly guessed the continent, while yellow means your guess is relatively close to the target country."
+    },
+    {
+      "question": "What is the proximity percentage?",
+      "answer": "The proximity percentage shows how close your guess is to the target country, with 100% indicating a perfect match."
+    },
+    {
+      "question": "How is distance calculated?",
+      "answer": "We calculate the straight-line distance (in kilometers) between the capitals of the two countries."
+    },
+    {
+      "question": "Why isn't a certain country a valid answer?",
+      "answer": "Our database includes UN-recognized countries; some territories or disputed regions may not be included."
+    },
+    {
+      "question": "How are countries or regions selected?",
+      "answer": "The game randomly selects a country as a puzzle. You can start a new game anytime to get a new puzzle."
+    },
+    {
+      "question": "How do I install Worldle on my phone?",
+      "answer": "Open the website in your mobile browser, then select the 'Add to Home Screen' option."
+    }
+  ]
+} 

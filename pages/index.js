@@ -9,7 +9,7 @@ import {
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
@@ -48,8 +48,10 @@ const removeStars = () => {
 	stars.forEach(star => star.remove());
 };
 
-export default function Home() {
+export default function Home({locale}) {
 	const { t } = useTranslation('common');
+	const { t: tIntro } = useTranslation('game-intro');
+	const { t: tFaq } = useTranslation('game-faq');
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
 
@@ -57,6 +59,8 @@ export default function Home() {
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	const showModalState = useSelector((state) => state.settings.value.showModal);
 	const [isDarkMode, setIsDarkMode] = useState(false);
+	const [showMoreIntro, setShowMoreIntro] = useState(false);
+	const [expandedFaqIndex, setExpandedFaqIndex] = useState(-1);
 	
 	// 添加猜测次数上限
 	const MAX_GUESSES = 8;
@@ -166,6 +170,28 @@ export default function Home() {
 	// Ensure the map is only shown during the game or in the modal, avoiding multiple maps at the same time
 	const mapComponent = !showModalState && !isComplete;
 
+	// 安全获取FAQ数据
+	const getFaqItems = () => {
+		try {
+			const faqData = tFaq('faqItems', { returnObjects: true });
+			console.log('FAQ数据类型:', typeof faqData, Array.isArray(faqData));
+			
+			if (Array.isArray(faqData)) {
+				return faqData;
+			} else if (faqData && typeof faqData === 'object') {
+				// 如果返回的是对象而不是数组，尝试转换成数组
+				return Object.values(faqData);
+			} else {
+				console.error('FAQ数据不是数组或对象:', faqData);
+				// 如果数据获取失败，返回空数组避免渲染错误
+				return [];
+			}
+		} catch (error) {
+			console.error('获取FAQ项目时出错:', error);
+			return [];
+		}
+	};
+
 	return (
 		<div className="min-h-screen flex flex-col bg-[--background-primary] relative pb-20 transition-colors duration-300">
 			{/* 吉卜力风格的装饰元素 */}
@@ -229,6 +255,83 @@ export default function Home() {
 						
 						<div className="w-full mt-1">
 							<Guesses />
+						</div>
+						
+						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
+						<div className="w-full mt-10 game-intro-container bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg">
+							<h2 className="text-xl font-medium text-[--text-primary] mb-4">{tIntro('gameIntroTitle')}</h2>
+							
+							<div className="text-[--text-secondary] text-sm space-y-3">
+								<p>{tIntro('gameIntroDesc')}</p>
+								
+								<div className="pt-2">
+									<h3 className="font-medium text-[--text-primary] mb-2">{tIntro('howToPlayTitle')}</h3>
+									<ul className="list-disc list-inside space-y-1">
+										<li>{tIntro('howToPlay1')}</li>
+										<li>{tIntro('howToPlay2')}</li>
+										<li>{tIntro('howToPlay3')}</li>
+										<li>{tIntro('howToPlay4')}</li>
+									</ul>
+								</div>
+								
+								<div className="pt-1">
+									<button 
+										className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-sm flex items-center" 
+										onClick={() => setShowMoreIntro(!showMoreIntro)}
+									>
+										<span>{tIntro('readMore')}</span>
+										<svg 
+											xmlns="http://www.w3.org/2000/svg" 
+											className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
+											fill="none" 
+											viewBox="0 0 24 24" 
+											stroke="currentColor"
+										>
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+										</svg>
+									</button>
+									
+									{showMoreIntro && (
+										<div className="mt-3 space-y-3 animate-fadeIn">
+											<p>{tIntro('gameIntroExtended')}</p>
+											<p>{tIntro('gameFeatures')}</p>
+										</div>
+									)}
+								</div>
+							</div>
+						</div>
+						
+						{/* FAQ部分 */}
+						<div className="w-full mt-8 bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300">
+							<h2 className="text-xl font-medium text-[--text-primary] mb-6">{tFaq('faqTitle')}</h2>
+							
+							<div className="space-y-1">
+								{getFaqItems().map((item, index) => (
+									<div key={index} className="border-b border-[--border-color]">
+										<button 
+											className="w-full py-4 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
+											onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
+										>
+											<span>{item.question}</span>
+											<svg 
+												xmlns="http://www.w3.org/2000/svg" 
+												className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
+												fill="none" 
+												viewBox="0 0 24 24" 
+												stroke="currentColor"
+											>
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+											</svg>
+										</button>
+										
+										{expandedFaqIndex === index && (
+											<div className="pb-4 text-[--text-secondary] text-sm animate-fadeIn">
+												<p>{item.answer}</p>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -311,6 +414,38 @@ export default function Home() {
 					background: radial-gradient(circle, rgba(233, 226, 213, 0.3) 0%, rgba(233, 226, 213, 0) 70%);
 				}
 				
+				/* 游戏介绍区域样式 */
+				.game-intro-container {
+					position: relative;
+					overflow: hidden;
+					transition: all 0.3s ease;
+				}
+				
+				.game-intro-container::before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 4px;
+					background: linear-gradient(90deg, var(--ghibli-primary) 0%, var(--ghibli-secondary) 100%);
+					opacity: 0.7;
+				}
+				
+				.game-intro-container:hover::before {
+					opacity: 1;
+				}
+				
+				/* 为展开内容添加淡入效果 */
+				@keyframes fadeIn {
+					from { opacity: 0; transform: translateY(-10px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+				
+				.animate-fadeIn {
+					animation: fadeIn 0.3s ease forwards;
+				}
+				
 				/* 暗色主题星星动画 */
 				@keyframes twinkle {
 					0% {
@@ -351,7 +486,8 @@ export default function Home() {
 export async function getServerSideProps({ locale }) {
 	return {
 		props: {
-			...(await serverSideTranslations(locale, ['common', 'countries'])),
+			...(await serverSideTranslations(locale, ['common', 'countries', 'game-intro', 'game-faq'])),
+			locale,
 		},
 	};
 }
