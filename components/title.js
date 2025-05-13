@@ -69,7 +69,7 @@ function Title(props) {
 					right: 50px;
 					top: 50%;
 					transform: translateY(-50%);
-					z-index: 100;
+					z-index: 5;
 				}
 				
 				.language-container {
@@ -77,7 +77,7 @@ function Title(props) {
 					right: -70px;
 					top: 50%;
 					transform: translateY(-50%);
-					z-index: 100;
+					z-index: 5;
 				}
 				
 				@media (max-width: 768px) {

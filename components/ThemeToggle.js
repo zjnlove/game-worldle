@@ -57,7 +57,7 @@ const ThemeToggle = () => {
 
       <style jsx>{`
         .theme-toggle {
-          z-index: 100;
+          z-index: 10;
         }
         .theme-btn {
           display: flex;

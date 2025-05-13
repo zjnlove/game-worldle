@@ -106,7 +106,7 @@ const LanguageSwitcher = () => {
       
       <style jsx>{`
         .language-switcher {
-          z-index: 100;
+          z-index: 10;
           position: relative;
         }
         .language-btn {
