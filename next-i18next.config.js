@@ -3,7 +3,7 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en', 'zh', 'tw', 'ja', 'ko', 'de', 'fr', 'ru', 'hi'],
   },
-  localePath: './public/locales',
+  localePath: './i18n/locales',
   ns: ['common', 'countries'],
   defaultNS: 'common',
 } 

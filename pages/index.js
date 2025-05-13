@@ -1,4 +1,4 @@
-import CountrySVG from "../components/countrySVG";
+import CountrySVG from "../components/WorldSVG";
 import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
