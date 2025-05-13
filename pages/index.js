@@ -195,14 +195,14 @@ export default function Home() {
 				<div className="w-full flex flex-col items-center">
 					<div className="w-full max-w-md">
 						{mapComponent && (
-							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-4 mb-8 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
+							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-4 mb-4 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
 								<CountrySVG className={"w-full"} />
 							</div>
 						)}
 						
 						{isComplete && !showModalState ? (
 							<button
-								className="ghibli-btn text-lg py-3 px-10 mb-8 w-full"
+								className="ghibli-btn text-lg py-3 px-10 mb-4 w-full"
 								onClick={() => newGame()}
 							>
 								{t('playAgain')}
@@ -212,12 +212,12 @@ export default function Home() {
 						<GuessInput />
 						
 						{!isComplete && (
-							<div className="w-full my-6">
+							<div className="w-full my-3">
 								<CorrectAnswerBtn onSubmit={() => onSubmit()} />
 							</div>
 						)}
 						
-						<div className="w-full mt-2">
+						<div className="w-full mt-1">
 							<Guesses />
 						</div>
 					</div>
