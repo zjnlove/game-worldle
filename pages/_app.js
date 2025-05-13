@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<Head>
-					<title>Countryle - Guess the country</title>
+					<title>Worldle - Guess the country</title>
 					<link
 						rel="apple-touch-icon"
 						sizes="180x180"

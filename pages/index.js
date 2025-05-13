@@ -1,4 +1,4 @@
-import CountrySVG from "../components/CountryMap";
+import CountryMap from "../components/CountryMap";
 import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
@@ -226,7 +226,7 @@ export default function Home({locale}) {
 					<div className="w-full max-w-md">
 						{mapComponent && (
 							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-4 mb-4 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
-								<CountrySVG className={"w-full"} />
+								<CountryMap className={"w-full"} />
 							</div>
 						)}
 						

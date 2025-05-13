@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 // import Vector from "./all/AU/vector.svg";
 
-function CountrySVG(props) {
+function CountryMap(props) {
 	//Get answer country
 	const country = useSelector((state) => state.answer.value);
 	const [isDarkMode, setIsDarkMode] = useState(false);
@@ -83,12 +83,12 @@ function CountrySVG(props) {
 	);
 }
 
-CountrySVG.propTypes = {
+CountryMap.propTypes = {
 	className: PropTypes.string,
 };
 
-CountrySVG.defaultProps = {
+CountryMap.defaultProps = {
 	className: "",
 };
 
-export default CountrySVG;
+export default CountryMap;

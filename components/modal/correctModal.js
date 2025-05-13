@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./modal";
-import CountrySVG from "../CountryMap";
+import CountryMap from "../CountryMap";
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import { showModal } from "../../store/settingsSlice";
@@ -42,7 +42,7 @@ function CorrectModal(props) {
 						<p className="text-2xl font-semibold mb-4 text-[--ghibli-green]">{tCountries(answer.Country, answer.Country)}</p>
 						
 						<div className="relative w-1/2 mb-6 bg-[--background-secondary] rounded-lg p-2">
-							<CountrySVG className={"w-full"} />
+							<CountryMap className={"w-full"} />
 						</div>
 						
 						<p className="text-md mb-8 text-[--ghibli-blue]">
