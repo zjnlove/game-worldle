@@ -263,7 +263,7 @@ export default function Home({locale}) {
 
 						{/* 分享按钮 */}
 						<div className="w-full mt-5 mb-2 py-2 px-1 rounded-lg">
-							<h3 className="text-center text-[--text-primary] text-xl font-bold mb-2">Share on social media</h3>
+							<h3 className="text-center text-[--ghibli-brown] text-xl font-bold mb-2">Share on social media</h3>
 							<ShareButtons url={siteUrl} title={`Worldle - ${t('title')}`} />
 						</div>
 												
@@ -291,7 +291,7 @@ export default function Home({locale}) {
 						
 						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
 						{/* {showHelpSection && ( */}
-							<div className="w-full mt-3 game-intro-container bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
+							<div className="w-full mt-3 game-intro-container  rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
 								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-3">{tIntro('gameIntroTitle')}</h2>
 								
 								<div className="text-[--text-secondary] text-sm space-y-2">
@@ -337,7 +337,7 @@ export default function Home({locale}) {
 						
 						{/* FAQ部分 */}
 						{/* {showHelpSection && ( */}
-							<div className="w-full mt-3 bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
+							<div className="w-full mt-3 rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
 								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-4">{tFaq('faqTitle')}</h2>
 								
 								<div className="space-y-1">
