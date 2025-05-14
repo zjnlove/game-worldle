@@ -1,6 +1,7 @@
-const { i18n } = require('./next-i18next.config');
+const { i18n } = require('./i18n/config');
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
 	i18n,
 	webpack(config) {
 		config.module.rules.push({
@@ -14,4 +15,8 @@ module.exports = {
 	images: {
 		domains: ["raw.githubusercontent.com"],
 	},
+	productionBrowserSourceMaps: false,
+	swcMinify: true,
 };
+
+module.exports = nextConfig;

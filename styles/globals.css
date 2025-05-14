@@ -14,6 +14,11 @@
   --ghibli-soft-blue: #aecbd6;
   --ghibli-soft-green: #c5dac1;
   --ghibli-sky: #cce5f9;
+  /* 扩展吉卜力色彩系列 */
+  --ghibli-red: #e05e48;     /* 吉卜力风格的红色，如《红猪》中的飞机 */
+  --ghibli-black: #2a2a2a;   /* 深邃的黑色，如《千与千寻》中的无脸男 */
+  --ghibli-orange: #e8a44c;  /* 温暖的橙色，如《哈尔的移动城堡》中的火焰卡西法 */
+  --ghibli-deep-blue: #2c4875; /* 深蓝色，如《天空之城》中的夜空 */
   
   /* 背景与文本颜色 */
   --background-primary: var(--ghibli-cream);

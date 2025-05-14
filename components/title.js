@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useI18n } from '../i18n/i18n-utils';
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 
 function Title(props) {
-	const { t } = useTranslation('common');
+	const { t } = useI18n('common');
 	const [animationStage, setAnimationStage] = useState(0);
 	const isComplete = useSelector((state) => state.settings.value.complete);
 	let interval = useRef();
@@ -108,6 +108,8 @@ function Title(props) {
 	);
 }
 
-Title.propTypes = {};
+Title.propTypes = {
+	title: PropTypes.string,
+};
 
 export default Title;

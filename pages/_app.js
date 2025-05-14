@@ -3,13 +3,20 @@ import Head from "next/head";
 import { store, persistor } from "../store/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { appWithTranslation, useTranslation } from 'next-i18next';
-import nextI18NextConfig from '../next-i18next.config';
+import { useEffect } from 'react';
+import { useI18n, initI18n } from '../i18n/i18n-utils';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }) {
-	const { t } = useTranslation('common', { 
-		useSuspense: false // 添加这个避免悬挂错误
-	}) || { t: key => key }; // 提供fallback避免报错
+	const router = useRouter();
+	const { locale } = router;
+	const { t } = useI18n('common');
+	
+	// 初始化国际化
+	useEffect(() => {
+		initI18n(locale);
+	}, [locale]);
+	
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
 	
 	// 获取页面传递的SEO自定义数据
@@ -33,7 +40,7 @@ function MyApp({ Component, pageProps }) {
 					<meta property="og:type" content="website" />
 					<meta property="og:url" content={`${siteUrl}${pageProps.canonicalPath || ''}`} />
 					<meta property="og:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
-					<meta property="og:locale" content={pageProps.locale || 'en'} />
+					<meta property="og:locale" content={locale || 'en'} />
 					
 					{/* Twitter 卡片 */}
 					<meta name="twitter:card" content="summary_large_image" />
@@ -87,4 +94,4 @@ function MyApp({ Component, pageProps }) {
 	);
 }
 
-export default appWithTranslation(MyApp, nextI18NextConfig);
+export default MyApp;
