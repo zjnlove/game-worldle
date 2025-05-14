@@ -13,7 +13,7 @@ const nextConfig = {
 		return config;
 	},
 	images: {
-		domains: ["raw.githubusercontent.com"],
+		domains: ["game-worldle.vercel.app"],
 	},
 	productionBrowserSourceMaps: false,
 	swcMinify: true,
