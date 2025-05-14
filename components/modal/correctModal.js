@@ -5,11 +5,11 @@ import CountryMap from "../CountryMap";
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import { showModal } from "../../store/settingsSlice";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
 
 function CorrectModal(props) {
-	const { t } = useTranslation('common');
-	const { t: tCountries } = useTranslation('countries');
+	const { t } = useI18n('common');
+	const { t: tCountries } = useI18n('countries');
 	const answer = useSelector((state) => state.answer.value);
 	const guesses = useSelector((state) => state.guesses.value);
 	const showModalState = useSelector(
@@ -62,6 +62,8 @@ function CorrectModal(props) {
 	);
 }
 
-CorrectModal.propTypes = {};
+CorrectModal.propTypes = {
+	playAgainPress: PropTypes.func.isRequired
+};
 
 export default CorrectModal;

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { CgSpinner } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import Tooltip from "../tooltip/tooltip";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
 
 function CheckAnswerBtn(props) {
-	const { t } = useTranslation('common');
+	const { t } = useI18n('common');
 	const [loading, setLoading] = useState(false);
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);

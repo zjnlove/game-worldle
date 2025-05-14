@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { getSupportedLanguages } from '../i18n/i18n-utils';
 
 const LanguageSwitcher = () => {
   const router = useRouter();
@@ -8,18 +9,8 @@ const LanguageSwitcher = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   
-  // 所有支持的语言及显示名称
-  const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'zh', name: '简体中文' },
-    { code: 'tw', name: '繁体中文' },
-    { code: 'ja', name: '日本語' },
-    { code: 'ko', name: '한국어' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'fr', name: 'Français' },
-    { code: 'ru', name: 'Русский' },
-    { code: 'hi', name: 'हिन्दी' }
-  ];
+  // 获取支持的语言列表
+  const languages = getSupportedLanguages();
 
   // 获取当前语言的显示名称
   const getCurrentLanguageName = () => {

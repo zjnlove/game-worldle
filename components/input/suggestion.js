@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
 
 function Suggestion(props) {
-	const { t } = useTranslation('countries');
+	const { t } = useI18n('countries');
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	
 	// 检测当前主题

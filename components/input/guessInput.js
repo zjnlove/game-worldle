@@ -5,11 +5,12 @@ import { CountryCoords } from "../data/countrycodes";
 import AutoCompleteBox from "./autoCompleteBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelection } from "../../store/guessSelectionSlice";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
+import PropTypes from "prop-types";
 
 function GuessInput(props) {
-	const { t: tCommon } = useTranslation('common');
-	const { t: tCountries } = useTranslation('countries');
+	const { t: tCommon } = useI18n('common');
+	const { t: tCountries } = useI18n('countries');
 	const [guess, setGuess] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [suggestions, setSuggestions] = useState([]);
@@ -129,6 +130,12 @@ function GuessInput(props) {
 	);
 }
 
-GuessInput.propTypes = {};
+GuessInput.propTypes = {
+	isDisabled: PropTypes.bool
+};
+
+GuessInput.defaultProps = {
+	isDisabled: false
+};
 
 export default GuessInput;

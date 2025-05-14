@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
 
 import Guess from "./guess";
+
 function Guesses(props) {
-	const { t } = useTranslation('common');
+	const { t } = useI18n('common');
 	const guesses = useSelector((state) => state.guesses.value);
 	return (
 		<div className="w-full">

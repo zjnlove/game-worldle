@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
-import { useTranslation } from "react-i18next";
+import { useI18n } from "../../i18n/i18n-utils";
 
 function Guess(props) {
-	const { t } = useTranslation('common');
-	const { t: tCountries } = useTranslation('countries');
+	const { t } = useI18n('common');
+	const { t: tCountries } = useI18n('countries');
 	return (
 		<div
 			className={`ghibli-card rounded-md flex flex-row items-center justify-between bg-white transition-all h-[46px] ${
@@ -31,6 +31,6 @@ function Guess(props) {
 	);
 }
 
-Guess.propTypes = { guess: PropTypes.object.isRequired };
+Guess.propTypes = { guess: PropTypes.object.isRequired, topMargin: PropTypes.bool };
 
 export default Guess;

@@ -15,8 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
 import { setSelection } from "../store/guessSelectionSlice";
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useI18n } from '../i18n/i18n-utils';
 
 // 添加星星背景
 const addStars = () => {
@@ -50,9 +49,9 @@ const removeStars = () => {
 };
 
 export default function Home({locale}) {
-	const { t } = useTranslation('common', { useSuspense: false }) || { t: key => key };
-	const { t: tIntro } = useTranslation('game-intro', { useSuspense: false }) || { t: key => key };
-	const { t: tFaq } = useTranslation('game-faq', { useSuspense: false }) || { t: key => key };
+	const { t } = useI18n('common');
+	const { t: tIntro } = useI18n('game-intro');
+	const { t: tFaq } = useI18n('game-faq');
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
@@ -505,7 +504,6 @@ export async function getServerSideProps({ locale }) {
 
 	return {
 		props: {
-			...(await serverSideTranslations(locale, ['common', 'countries', 'game-intro', 'game-faq'])),
 			locale,
 			// 添加SEO相关数据
 			structuredData,
