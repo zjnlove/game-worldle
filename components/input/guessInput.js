@@ -59,6 +59,12 @@ function GuessInput(props) {
 
 	//Search when guess state changes (as user types)
 	const onType = (text) => {
+		// 当用户开始输入新内容时，重置选择状态
+		if (itemSelectedState !== null) {
+			setItemSelectedState(null);
+			dispatch(setSelection(null));
+		}
+		
 		if (text.length > 0) {
 			setGuess(text);
 			//Set up fuse with localized countries data
