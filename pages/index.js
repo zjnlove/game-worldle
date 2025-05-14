@@ -298,7 +298,7 @@ export default function Home({locale}) {
 									<p>{tIntro('gameIntroDesc')}</p>
 									
 									<div className="pt-1">
-										<h3 className="font-medium text-[--text-primary] mb-2">{tIntro('howToPlayTitle')}</h3>
+										<h3 className="font-bold text-[--ghibli-brown] mb-2">{tIntro('howToPlayTitle')}</h3>
 										<ul className="list-disc list-inside space-y-1">
 											<li>{tIntro('howToPlay1')}</li>
 											<li>{tIntro('howToPlay2')}</li>
