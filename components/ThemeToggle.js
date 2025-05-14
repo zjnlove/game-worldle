@@ -110,12 +110,13 @@ const ThemeToggle = () => {
           opacity: 1;
         }
         .theme-icon {
-          color: white;
+          color: var(--ghibli-dark);
           position: relative;
           z-index: 2;
           filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
           transition: all 0.3s ease;
         }
+
         .theme-btn:hover .theme-icon {
           transform: ${isDarkMode ? 'rotate(45deg)' : 'rotate(-45deg)'};
         }
