@@ -5,6 +5,7 @@ import CorrectModal from "../components/modal/correctModal";
 import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
 import Title from "../components/title";
 import Head from "next/head";
+import ShareButtons from "../components/ShareButtons";
 import {
 	NewCountry,
 	checkGuess,
@@ -62,6 +63,8 @@ export default function Home({locale}) {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [showMoreIntro, setShowMoreIntro] = useState(false);
 	const [expandedFaqIndex, setExpandedFaqIndex] = useState(-1);
+	const [showHelpSection, setShowHelpSection] = useState(false);
+
 	
 	// 添加猜测次数上限
 	const MAX_GUESSES = 8;
@@ -194,7 +197,7 @@ export default function Home({locale}) {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col bg-[--background-primary] relative pb-20 transition-colors duration-300">
+		<div className="min-h-screen flex flex-col bg-[--background-primary] relative overflow-hidden transition-colors duration-300">
 			{/* 吉卜力风格的装饰元素 */}
 			<div className={`decorative-element leaf ${isDarkMode ? 'dark' : ''}`}>
 				<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -216,24 +219,24 @@ export default function Home({locale}) {
 				</div>
 			)}
 			
-			<div className="flex-1 flex flex-col items-center py-6 px-4 z-10 max-w-2xl mx-auto w-full">
+			<div className="flex-1 flex flex-col items-center py-4 px-4 z-10 max-w-2xl mx-auto w-full">
 				{modalComponent}
 				
-				<div className="w-full mb-6 title-container">
+				<div className="w-full mb-4 title-container">
 					<Title />
 				</div>
 				
 				<div className="w-full flex flex-col items-center">
 					<div className="w-full max-w-md">
 						{mapComponent && (
-							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-4 mb-4 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
+							<div className={`w-full map-container ${isDarkMode ? 'dark-map-container' : ''} bg-white rounded-2xl shadow-lg p-3 mb-4 md:mb-5 border ${isDarkMode ? 'border-transparent' : 'border-[--border-color]'} transform hover:scale-105 transition-transform duration-300`}>
 								<CountryMap className={"w-full"} />
 							</div>
 						)}
 						
 						{(isComplete || isMaxGuessesReached) && !showModalState ? (
 							<button
-								className="ghibli-btn text-lg py-3 px-10 mb-4 w-full"
+								className="ghibli-btn text-lg py-2 px-10 mb-3 w-full"
 								onClick={() => newGame()}
 							>
 								{t('playAgain')}
@@ -243,13 +246,13 @@ export default function Home({locale}) {
 						<GuessInput isDisabled={isMaxGuessesReached || isComplete} />
 						
 						{!isComplete && !isMaxGuessesReached && (
-							<div className="w-full my-3">
+							<div className="w-full my-3 md:my-4">
 								<CorrectAnswerBtn onSubmit={() => onSubmit()} />
 							</div>
 						)}
 						
 						{isMaxGuessesReached && !isComplete && (
-							<div className="w-full my-3 text-center text-[--ghibli-brown] font-medium py-2 bg-red-100 rounded-md border border-red-200">
+							<div className="w-full my-2 text-center text-[--ghibli-brown] font-medium py-2 bg-red-100 rounded-md border border-red-200">
 								{t('maxGuessesReached')}
 							</div>
 						)}
@@ -257,66 +260,62 @@ export default function Home({locale}) {
 						<div className="w-full mt-1">
 							<Guesses />
 						</div>
+
+						{/* 分享按钮 */}
+						<div className="w-full mt-5 mb-2 py-2 px-1 rounded-lg">
+							<h3 className="text-center text-[--text-primary] text-xl font-bold mb-2">Share on social media</h3>
+							<ShareButtons url={siteUrl} title={`Worldle - ${t('title')}`} />
+						</div>
+												
+						{/* 帮助按钮 */}
+						{/* <button 
+							className="help-toggle-btn mx-auto mt-4 text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] font-medium flex items-center gap-2 bg-[--background-secondary] py-2 px-6 rounded-full shadow-sm border border-[--border-color] transition-all duration-300"
+							onClick={() => setShowHelpSection(!showHelpSection)}
+						>
+							{showHelpSection ? (
+								<>
+									<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+										<path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+									</svg>
+									{t('hideHelp')}
+								</>
+							) : (
+								<>
+									<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+										<path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+									</svg>
+									{t('showHelp')}
+								</>
+							)}
+						</button> */}
 						
 						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
-						<div className="w-full mt-10 game-intro-container bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg">
-							<h2 className="text-xl font-bold text-[--text-primary] mb-4">{tIntro('gameIntroTitle')}</h2>
-							
-							<div className="text-[--text-secondary] text-sm space-y-3">
-								<p>{tIntro('gameIntroDesc')}</p>
+						{/* {showHelpSection && ( */}
+							<div className="w-full mt-3 game-intro-container bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
+								<h2 className="text-xl font-bold text-[--text-primary] mb-3">{tIntro('gameIntroTitle')}</h2>
 								
-								<div className="pt-2">
-									<h3 className="font-medium text-[--text-primary] mb-2">{tIntro('howToPlayTitle')}</h3>
-									<ul className="list-disc list-inside space-y-1">
-										<li>{tIntro('howToPlay1')}</li>
-										<li>{tIntro('howToPlay2')}</li>
-										<li>{tIntro('howToPlay3')}</li>
-										<li>{tIntro('howToPlay4')}</li>
-									</ul>
-								</div>
-								
-								<div className="pt-1">
-									<button 
-										className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-sm flex items-center" 
-										onClick={() => setShowMoreIntro(!showMoreIntro)}
-									>
-										<span>{tIntro('readMore')}</span>
-										<svg 
-											xmlns="http://www.w3.org/2000/svg" 
-											className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
-											fill="none" 
-											viewBox="0 0 24 24" 
-											stroke="currentColor"
-										>
-											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-										</svg>
-									</button>
+								<div className="text-[--text-secondary] text-sm space-y-2">
+									<p>{tIntro('gameIntroDesc')}</p>
 									
-									{showMoreIntro && (
-										<div className="mt-3 space-y-3 animate-fadeIn">
-											<p>{tIntro('gameIntroExtended')}</p>
-											<p>{tIntro('gameFeatures')}</p>
-										</div>
-									)}
-								</div>
-							</div>
-						</div>
-						
-						{/* FAQ部分 */}
-						<div className="w-full mt-8 bg-[--background-secondary] rounded-xl p-6 shadow-md border border-[--border-color] transition-all duration-300">
-							<h2 className="text-xl font-bold text-[--text-primary] mb-6">{tFaq('faqTitle')}</h2>
-							
-							<div className="space-y-1">
-								{getFaqItems().map((item, index) => (
-									<div key={index} className="border-b border-[--border-color]">
+									<div className="pt-1">
+										<h3 className="font-medium text-[--text-primary] mb-2">{tIntro('howToPlayTitle')}</h3>
+										<ul className="list-disc list-inside space-y-1">
+											<li>{tIntro('howToPlay1')}</li>
+											<li>{tIntro('howToPlay2')}</li>
+											<li>{tIntro('howToPlay3')}</li>
+											<li>{tIntro('howToPlay4')}</li>
+										</ul>
+									</div>
+									
+									<div className="pt-1">
 										<button 
-											className="w-full py-4 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
-											onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
+											className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-sm flex items-center" 
+											onClick={() => setShowMoreIntro(!showMoreIntro)}
 										>
-											<span>{item.question}</span>
+											<span>{showMoreIntro ? tIntro('showLess') : tIntro('readMore')}</span>
 											<svg 
 												xmlns="http://www.w3.org/2000/svg" 
-												className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
+												className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
 												fill="none" 
 												viewBox="0 0 24 24" 
 												stroke="currentColor"
@@ -325,31 +324,54 @@ export default function Home({locale}) {
 											</svg>
 										</button>
 										
-										{expandedFaqIndex === index && (
-											<div className="pb-4 text-[--text-secondary] text-sm animate-fadeIn">
-												<p>{item.answer}</p>
+										{showMoreIntro && (
+											<div className="mt-2 space-y-2 animate-fadeIn">
+												<p>{tIntro('gameIntroExtended')}</p>
+												<p>{tIntro('gameFeatures')}</p>
 											</div>
 										)}
 									</div>
-								))}
+								</div>
 							</div>
-						</div>
+						{/* )} */}
+						
+						{/* FAQ部分 */}
+						{/* {showHelpSection && ( */}
+							<div className="w-full mt-3 bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
+								<h2 className="text-xl font-bold text-[--text-primary] mb-4">{tFaq('faqTitle')}</h2>
+								
+								<div className="space-y-1">
+									{getFaqItems().map((item, index) => (
+										<div key={index} className="border-b border-[--border-color]">
+											<button 
+												className="w-full py-3 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
+												onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
+											>
+												<span>{item.question}</span>
+												<svg 
+													xmlns="http://www.w3.org/2000/svg" 
+													className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
+													fill="none" 
+													viewBox="0 0 24 24" 
+													stroke="currentColor"
+												>
+													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+												</svg>
+											</button>
+											
+											{expandedFaqIndex === index && (
+												<div className="pb-3 text-[--text-secondary] text-sm animate-fadeIn">
+													<p>{item.answer}</p>
+												</div>
+											)}
+										</div>
+									))}
+								</div>
+							</div>
+						{/* )} */}
 					</div>
 				</div>
 			</div>
-			
-			{!isComplete && !isMaxGuessesReached && (
-				<footer className="py-6 px-6 flex justify-center w-full fixed bottom-0 left-0 bg-[--background-primary] z-20 shadow-inner border-t border-[--border-color] transition-colors duration-300">
-					<div className="w-full max-w-md">
-						<button
-							className="ghibli-btn-secondary w-full text-base py-6 h-14 flex items-center justify-center"
-							onClick={() => newGame()}
-						>
-							{t('newCountry')}
-						</button>
-					</div>
-				</footer>
-			)}
 			
 			<style jsx>{`
 				.map-container {
@@ -443,8 +465,17 @@ export default function Home({locale}) {
 					to { opacity: 1; transform: translateY(0); }
 				}
 				
+				@keyframes slideDown {
+					from { opacity: 0; transform: translateY(-20px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+				
 				.animate-fadeIn {
 					animation: fadeIn 0.3s ease forwards;
+				}
+				
+				.animate-slideDown {
+					animation: slideDown 0.4s ease forwards;
 				}
 				
 				/* 暗色主题星星动画 */
@@ -465,19 +496,52 @@ export default function Home({locale}) {
 				
 				@media (max-width: 480px) {
 					.title-container {
-						margin-top: 20px;
-						margin-bottom: 30px;
+						margin-top: 10px;
+						margin-bottom: 15px;
 					}
 					
-					.py-6 {
-						padding-top: 1rem;
-						padding-bottom: 1rem;
+					.py-4 {
+						padding-top: 0.75rem;
+						padding-bottom: 0.75rem;
 					}
 					
 					.map-container {
-						margin-bottom: 1rem;
-						padding: 0.75rem;
+						margin-bottom: 0.75rem;
+						padding: 0.5rem;
 					}
+					
+					.help-toggle-btn {
+						margin-top: 12px;
+					}
+				}
+				
+				/* 移除底部分享区域样式，因为已经不在底部了 */
+				.mt-auto.pt-4 {
+					position: relative;
+					overflow: hidden;
+				}
+				
+				/* 暗色模式下的分享区域渐变背景 - 此样式可以保留用于其他目的 */
+				@media (prefers-color-scheme: dark) {
+					.mt-auto.pt-4::before {
+						content: '';
+						position: absolute;
+						left: 0;
+						right: 0;
+						top: 0;
+						height: 1px;
+						background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 50%, transparent);
+					}
+				}
+				
+				/* 添加淡入动画 */
+				@keyframes fadeIn {
+					from { opacity: 0; transform: translateY(10px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+				
+				.animate-fadeIn {
+					animation: fadeIn 0.6s ease-out forwards;
 				}
 			`}</style>
 		</div>
