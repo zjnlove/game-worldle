@@ -292,7 +292,7 @@ export default function Home({locale}) {
 						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
 						{/* {showHelpSection && ( */}
 							<div className="w-full mt-3 game-intro-container bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
-								<h2 className="text-xl font-bold text-[--text-primary] mb-3">{tIntro('gameIntroTitle')}</h2>
+								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-3">{tIntro('gameIntroTitle')}</h2>
 								
 								<div className="text-[--text-secondary] text-sm space-y-2">
 									<p>{tIntro('gameIntroDesc')}</p>
@@ -338,7 +338,7 @@ export default function Home({locale}) {
 						{/* FAQ部分 */}
 						{/* {showHelpSection && ( */}
 							<div className="w-full mt-3 bg-[--background-secondary] rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
-								<h2 className="text-xl font-bold text-[--text-primary] mb-4">{tFaq('faqTitle')}</h2>
+								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-4">{tFaq('faqTitle')}</h2>
 								
 								<div className="space-y-1">
 									{getFaqItems().map((item, index) => (
