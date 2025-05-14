@@ -1,7 +1,7 @@
 {
-    "name": "Worldle - 猜国家游戏",
+    "name": "Worldle - Country Guessing Game",
     "short_name": "Worldle",
-    "description": "一个根据国家轮廓猜测国家的地理游戏",
+    "description": "A geography game where you guess countries based on their outlines",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

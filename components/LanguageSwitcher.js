@@ -133,10 +133,11 @@ const LanguageSwitcher = () => {
           z-index: -1;
         }
         .globe-icon {
-          color: white;
+          color: var(--ghibli-dark);
           filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
         }
         .lang-name {
+          color: var(--ghibli-dark);
           max-width: 80px;
           white-space: nowrap;
           overflow: hidden;

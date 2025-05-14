@@ -8,7 +8,7 @@ function Guess(props) {
 	const { t: tCountries } = useI18n('countries');
 	return (
 		<div
-			className={`ghibli-card rounded-md flex flex-row items-center justify-between bg-white transition-all h-[46px] ${
+			className={`ghibli-card rounded-md flex flex-row items-center justify-between bg-white transition-all ${
 				props.topMargin ? "mt-3" : ""
 			} ${props.guess.correct ? "border-2 border-[--ghibli-green] bg-[--ghibli-soft-green] bg-opacity-20" : ""}`}
 		>
