@@ -81,6 +81,14 @@ function MyApp({ Component, pageProps }) {
 					<meta name="msapplication-TileColor" content="#2d89ef" />
 					<meta name="theme-color" content="#ffffff" />
 					
+					{/* Google AdSense */}
+					<script
+						async
+						src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_ADSENSE_ID || ''}`}
+						crossOrigin="anonymous"
+					></script>
+					{/* 请将 ca-pub-YOUR_PUBLISHER_ID 替换为您的 AdSense 发布者 ID */}
+					
 					{/* 注入页面特定的结构化数据 */}
 					{pageProps.structuredData && (
 						<script
