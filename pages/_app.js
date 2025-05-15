@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
 		initI18n(locale);
 	}, [locale]);
 	
-	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
+	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top';
 	
 	// 获取页面传递的SEO自定义数据
 	const pageTitle = t('seoTitle')||pageProps.title;

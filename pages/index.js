@@ -55,7 +55,7 @@ export default function Home({locale}) {
 	const { t: tFaq } = useI18n('game-faq');
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
-	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com';
+	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top';
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);
 	const isComplete = useSelector((state) => state.settings.value.complete);
@@ -555,7 +555,7 @@ export async function getServerSideProps({ locale }) {
 		"@type": "WebApplication",
 		"name": "Worldle",
 		"description": "A geography game where you guess countries from their silhouette",
-		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle-game.com',
+		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top',
 		"applicationCategory": "GameApplication",
 		"genre": "Geography Quiz",
 		"operatingSystem": "Web Browser",

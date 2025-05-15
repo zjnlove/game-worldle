@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const ShareButtons = ({ url, title }) => {
   // 确保URL和标题有默认值
-  const shareUrl = url || 'https://worldle-game.com';
+  const shareUrl = url || 'https://worldle.top';
   const shareTitle = title || 'Worldle - Geography Guessing Game';
   const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
   
