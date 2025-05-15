@@ -34,7 +34,8 @@ function MyApp({ Component, pageProps }) {
 					{/* 规范链接 */}
 					<link rel="canonical" href={`${siteUrl}${pageProps.canonicalPath || ''}`} />
 					
-					{/* Open Graph 标签 */}
+					{/* Open Graph 标签 */}og:site_name
+					<meta property="og:site_name" content={`Worldle Unlimited`} />
 					<meta property="og:title" content={`Worldle - ${pageTitle}`} />
 					<meta property="og:description" content={pageDescription} />
 					<meta property="og:type" content="website" />
