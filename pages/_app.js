@@ -88,6 +88,19 @@ function MyApp({ Component, pageProps }) {
 						crossOrigin="anonymous"
 					></script>
 					{/* 请将 ca-pub-YOUR_PUBLISHER_ID 替换为您的 AdSense 发布者 ID */}
+
+					{/* Google Analytics */}
+					<script async src="https://www.googletagmanager.com/gtag/js?id=G-FV14KERL0S"></script>
+					<script
+					  dangerouslySetInnerHTML={{
+					    __html: `
+					      window.dataLayer = window.dataLayer || [];
+					      function gtag(){dataLayer.push(arguments);}
+					      gtag('js', new Date());
+					      gtag('config', 'G-FV14KERL0S');
+					    `,
+					  }}
+					/>
 					
 					{/* 注入页面特定的结构化数据 */}
 					{pageProps.structuredData && (
