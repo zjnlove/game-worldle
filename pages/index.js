@@ -552,9 +552,10 @@ export async function getServerSideProps({ locale }) {
 	// 定义首页使用的结构化数据
 	const structuredData = {
 		"@context": "https://schema.org",
-		"@type": "WebApplication",
-		"name": "Worldle",
-		"description": "A geography game where you guess countries from their silhouette",
+		"@type": "WebSite",
+		"name": "Worldle Unlimited",
+		"alternateName": "WORLDLE UNLIMITED",
+		"description": "Play Worldle Unlimited, the fun geography game where you guess countries from their silhouette. Enjoy unlimited games with Worldle Unlimited.",
 		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top',
 		"applicationCategory": "GameApplication",
 		"genre": "Geography Quiz",
