@@ -9,6 +9,7 @@ import {
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
+import Title from "../components/Title";		
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
@@ -220,9 +221,9 @@ export default function Home({locale}) {
 			<div className="flex-1 flex flex-col items-center py-4 px-4 z-10 max-w-2xl mx-auto w-full">
 				{modalComponent}
 				
-				{/* <div className="w-full mb-4 title-container">
+				<div className="w-full mb-4 title-container">
 					<Title />
-				</div> */}
+				</div>
 				
 				<div className="w-full flex flex-col items-center">
 					<div className="w-full max-w-md">
