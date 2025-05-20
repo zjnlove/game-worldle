@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<Head>
-					<title>Worldle - {pageTitle}</title>
+					<title>{`Worldle - ${pageTitle}`}</title>
 					<meta name="description" content={pageDescription} />
 					<meta name="keywords" content={pageKeywords} />
 					
