@@ -263,7 +263,7 @@ export default function Home({locale}) {
 
 						{/* 分享按钮 */}
 						<div className="w-full mt-5 mb-2 py-2 px-1 rounded-lg">
-							<h3 className="text-center text-[--ghibli-brown] text-xl font-bold mb-2">Share on social media</h3>
+							<h2 className="text-center text-[--ghibli-brown] text-xl font-bold mb-2">Share on social media</h2>
 							<ShareButtons url={siteUrl} title={`Worldle - ${t('title')}`} />
 						</div>
 												
