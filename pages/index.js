@@ -3,14 +3,15 @@ import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
 import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
+import Title from "../components/title";
+import Head from "next/head";
 import ShareButtons from "../components/ShareButtons";
 import {
 	NewCountry,
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
-import Title from "../components/Title";		
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
