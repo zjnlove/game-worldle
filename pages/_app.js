@@ -19,10 +19,10 @@ function MyApp({ Component, pageProps }) {
 	
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top';
 	
-	// 获取页面传递的SEO自定义数据
-	const pageTitle = t('seoTitle')||pageProps.title;
-	const pageDescription = t('seoDescription')||pageProps.description;
-	const pageKeywords = t('seoKeywords')||pageProps.keywords;
+	// 获取页面传递的SEO自定义数据，优先使用pageProps，保证有兜底值
+	const pageTitle = pageProps.title || t('seoTitle') || 'Worldle Unlimited';
+	const pageDescription = pageProps.description || t('seoDescription') || 'Worldle Unlimited';
+	const pageKeywords = pageProps.keywords || t('seoKeywords') || 'worldle, game, geography';
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
