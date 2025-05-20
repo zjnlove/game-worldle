@@ -3,15 +3,13 @@ import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
 import CorrectModal from "../components/modal/correctModal";
 import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
-import Title from "../components/title";
-import Head from "next/head";
 import ShareButtons from "../components/ShareButtons";
 import {
 	NewCountry,
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
@@ -222,9 +220,9 @@ export default function Home({locale}) {
 			<div className="flex-1 flex flex-col items-center py-4 px-4 z-10 max-w-2xl mx-auto w-full">
 				{modalComponent}
 				
-				<div className="w-full mb-4 title-container">
+				{/* <div className="w-full mb-4 title-container">
 					<Title />
-				</div>
+				</div> */}
 				
 				<div className="w-full flex flex-col items-center">
 					<div className="w-full max-w-md">
