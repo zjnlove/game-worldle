@@ -101,6 +101,18 @@ function MyApp({ Component, pageProps }) {
 					    `,
 					  }}
 					/>
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify({
+								"@context": "https://schema.org",
+								"@type": "WebSite",
+								"name": "Worldle Unlimited",
+								"alternateName": "WORLDLE UNLIMITED",
+								"url": "https://worldle.top"
+							})
+						}}
+					/>
 					
 					{/* 注入页面特定的结构化数据 */}
 					{pageProps.structuredData && (
