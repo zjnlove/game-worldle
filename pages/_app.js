@@ -34,15 +34,15 @@ function MyApp({ Component, pageProps }) {
 					{/* 规范链接 */}
 					<link rel="canonical" href={`${siteUrl}${pageProps.canonicalPath || ''}`} />
 					
-					{/*  GOpenraph 标签 */}
+					{/* Open Graph 标签 */}
 					{/* <meta property="og:site_name" content={`Worldle Unlimited`} />
 					<meta property="og:title" content={`Worldle - ${pageTitle}`} />
 					<meta property="og:description" content={pageDescription} />
 					<meta property="og:type" content="website" />
 					<meta property="og:url" content={`${siteUrl}${pageProps.canonicalPath || ''}`} />
 					<meta property="og:image" content={`${siteUrl}/${pageProps.ogImage || 'worldle-og-image.png'}`} />
-					<meta property="og:locale" content={locale || 'en'} /> */}
-					
+					<meta property="og:locale" content={locale || 'en'} />
+					 */}
 					{/* Twitter 卡片 */}
 					{/* <meta name="twitter:card" content="summary_large_image" />
 					<meta name="twitter:title" content={`Worldle - ${pageTitle}`} />
