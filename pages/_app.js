@@ -101,7 +101,7 @@ function MyApp({ Component, pageProps }) {
 					    `,
 					  }}
 					/>
-					<script
+					{/* <script
 						type="application/ld+json"
 						dangerouslySetInnerHTML={{
 							__html: JSON.stringify({
@@ -112,15 +112,15 @@ function MyApp({ Component, pageProps }) {
 								"url": "https://worldle.top"
 							})
 						}}
-					/>
+					/> */}
 					
 					{/* 注入页面特定的结构化数据 */}
-					{/* {pageProps.structuredData && (
+					{pageProps.structuredData && (
 						<script
 							type="application/ld+json"
 							dangerouslySetInnerHTML={{ __html: JSON.stringify(pageProps.structuredData) }}
 						/>
-					)} */}
+					)}
 				</Head>
 				<Component {...pageProps} />
 			</PersistGate>
