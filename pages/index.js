@@ -1,3 +1,4 @@
+import "../styles/index.css";
 import CountryMap from "../components/CountryMap";
 import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
@@ -18,7 +19,7 @@ import { showModal, setComplete } from "../store/settingsSlice";
 import { setSelection } from "../store/guessSelectionSlice";
 import { useI18n } from '../i18n/i18n-utils';
 import { addStars, removeStars } from '../components/starsEffect';
-import '../styles/index.css';
+
 
 export default function Home({locale}) {
 	const { t } = useI18n('common');
