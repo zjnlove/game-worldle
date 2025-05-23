@@ -220,12 +220,13 @@ export default function Home({locale}) {
 			)}
 			
 			<div className="flex-1 flex flex-col items-center py-4 px-4 z-10 max-w-2xl mx-auto w-full">
-				{modalComponent}
-				
-				<div className="w-full mb-4 title-container">
-					<Title />
+				{/* 将游戏介绍和FAQ移到这里，设置更宽 */}
+				<div className="w-full max-w-4xl mx-auto">
+					{modalComponent}
+					<div className="w-full mb-4 title-container">
+						<Title />
+					</div>
 				</div>
-				
 				<div className="w-full flex flex-col items-center">
 					<div className="w-full max-w-md">
 						{mapComponent && (
@@ -289,86 +290,76 @@ export default function Home({locale}) {
 							)}
 						</button> */}
 						
-						{/* 游戏介绍和说明区域 - 使用国际化获取文本 */}
-						{/* {showHelpSection && ( */}
-							<div className="w-full mt-3 game-intro-container  rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
-								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-3">{tIntro('gameIntroTitle')}</h2>
-								
-								<div className="text-[--text-secondary] text-sm space-y-2">
-									<p>{tIntro('gameIntroDesc')}</p>
-									
-									<div className="pt-1">
-										<h3 className="font-bold text-[--ghibli-brown] mb-2">{tIntro('howToPlayTitle')}</h3>
-										<ul className="list-disc list-inside space-y-1">
-											<li>{tIntro('howToPlay1')}</li>
-											<li>{tIntro('howToPlay2')}</li>
-											<li>{tIntro('howToPlay3')}</li>
-											<li>{tIntro('howToPlay4')}</li>
-										</ul>
+					</div>
+				</div>
+				{/* 游戏介绍和FAQ区域，宽度放大 */}
+				<div className="w-full max-w-2xl mx-auto">
+					<div className="w-full mt-3 game-intro-container rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
+						<h2 className="text-2xl font-bold text-[--ghibli-brown] mb-3">{tIntro('gameIntroTitle')}</h2>
+						<div className="text-[--text-secondary] text-lg space-y-2">
+							<p>{tIntro('gameIntroDesc')}</p>
+							<div className="pt-1">
+								<h3 className="text-xl font-bold text-[--ghibli-brown] mb-2">{tIntro('howToPlayTitle')}</h3>
+								<ul className="list-disc list-inside space-y-1">
+									<li>{tIntro('howToPlay1')}</li>
+									<li>{tIntro('howToPlay2')}</li>
+									<li>{tIntro('howToPlay3')}</li>
+									<li>{tIntro('howToPlay4')}</li>
+								</ul>
+							</div>
+							<div className="pt-1">
+								<button 
+									className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-lg font-bold flex items-center" 
+									onClick={() => setShowMoreIntro(!showMoreIntro)}
+								>
+									<span>{showMoreIntro ? tIntro('showLess') : tIntro('readMore')}</span>
+									<svg 
+										xmlns="http://www.w3.org/2000/svg" 
+										className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
+										fill="none" 
+										viewBox="0 0 24 24" 
+										stroke="currentColor"
+									>
+										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+									</svg>
+								</button>
+								{showMoreIntro && (
+									<div className="mt-2 space-y-2 animate-fadeIn">
+										<p>{tIntro('gameIntroExtended')}</p>
+										<p>{tIntro('gameFeatures')}</p>
 									</div>
-									
-									<div className="pt-1">
-										<button 
-											className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-sm flex items-center" 
-											onClick={() => setShowMoreIntro(!showMoreIntro)}
+								)}
+							</div>
+						</div>
+					</div>
+					<div className="w-full mt-3 rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
+						<h2 className="text-2xl font-bold text-[--ghibli-brown] mb-4">{tFaq('faqTitle')}</h2>
+						<div className="space-y-1">
+							{getFaqItems().map((item, index) => (
+								<div key={index} className="border-b border-[--border-color]">
+									<button 
+										className="text-xl w-full py-3 flex justify-between items-center text-left font-bold text-[--text-primary] focus:outline-none"
+										onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
+									>
+										<span>{item.question}</span>
+										<svg 
+											xmlns="http://www.w3.org/2000/svg" 
+											className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
+											fill="none" 
+											viewBox="0 0 24 24" 
+											stroke="currentColor"
 										>
-											<span>{showMoreIntro ? tIntro('showLess') : tIntro('readMore')}</span>
-											<svg 
-												xmlns="http://www.w3.org/2000/svg" 
-												className={`h-4 w-4 ml-1 transform transition-transform duration-300 ${showMoreIntro ? 'rotate-180' : ''}`} 
-												fill="none" 
-												viewBox="0 0 24 24" 
-												stroke="currentColor"
-											>
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-											</svg>
-										</button>
-										
-										{showMoreIntro && (
-											<div className="mt-2 space-y-2 animate-fadeIn">
-												<p>{tIntro('gameIntroExtended')}</p>
-												<p>{tIntro('gameFeatures')}</p>
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						{/* )} */}
-						
-						{/* FAQ部分 */}
-						{/* {showHelpSection && ( */}
-							<div className="w-full mt-3 rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
-								<h2 className="text-xl font-bold text-[--ghibli-brown] mb-4">{tFaq('faqTitle')}</h2>
-								
-								<div className="space-y-1">
-									{getFaqItems().map((item, index) => (
-										<div key={index} className="border-b border-[--border-color]">
-											<button 
-												className="w-full py-3 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
-												onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
-											>
-												<span>{item.question}</span>
-												<svg 
-													xmlns="http://www.w3.org/2000/svg" 
-													className={`h-5 w-5 transform transition-transform duration-300 ${expandedFaqIndex === index ? 'rotate-180' : ''}`} 
-													fill="none" 
-													viewBox="0 0 24 24" 
-													stroke="currentColor"
-												>
-													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-												</svg>
-											</button>
-											
-											{expandedFaqIndex === index && (
-												<div className="pb-3 text-[--text-secondary] text-sm animate-fadeIn">
-													<p>{item.answer}</p>
-												</div>
-											)}
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+										</svg>
+									</button>
+									{expandedFaqIndex === index && (
+										<div className="pb-3 text-[--text-secondary] text-lg animate-fadeIn">
+											<p>{item.answer}</p>
 										</div>
-									))}
+									)}
 								</div>
-							</div>
-						{/* )} */}
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
