@@ -230,12 +230,6 @@ footer::before {
 	}
 }
 
-/* 添加淡入动画 */
-@keyframes fadeIn {
-	from { opacity: 0; transform: translateY(10px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-
 /* 星星样式 */
 .star {
 	position: absolute;
