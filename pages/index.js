@@ -11,43 +11,14 @@ import {
 	checkGuess,
 	getDistanceAndBearing,
 } from "../components/util";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addGuess, clearGuesses } from "../store/guessesSlice";
 import { showModal, setComplete } from "../store/settingsSlice";
 import { setSelection } from "../store/guessSelectionSlice";
 import { useI18n } from '../i18n/i18n-utils';
-
-// 添加星星背景
-const addStars = () => {
-	removeStars(); // 先清除现有星星
-	
-	const container = document.querySelector('.min-h-screen');
-	if (!container) return;
-	
-	const starCount = 50;
-	for (let i = 0; i < starCount; i++) {
-		const star = document.createElement('div');
-		star.classList.add('star');
-		star.style.left = `${Math.random() * 100}%`;
-		star.style.top = `${Math.random() * 100}%`;
-		star.style.animationDelay = `${Math.random() * 4}s`;
-		star.style.opacity = Math.random() * 0.7 + 0.3;
-		
-		// 随机大小
-		const size = Math.random() * 2 + 1;
-		star.style.width = `${size}px`;
-		star.style.height = `${size}px`;
-		
-		container.appendChild(star);
-	}
-};
-
-// 移除星星背景
-const removeStars = () => {
-	const stars = document.querySelectorAll('.star');
-	stars.forEach(star => star.remove());
-};
+import { addStars, removeStars } from '../components/starsEffect';
+import '../styles/index.css';
 
 export default function Home({locale}) {
 	const { t } = useI18n('common');
@@ -56,6 +27,11 @@ export default function Home({locale}) {
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top';
+
+	// 添加引用，用于滚动定位
+	const gameRef = useRef(null);
+	const introRef = useRef(null);
+	const faqRef = useRef(null);
 
 	const guessSelection = useSelector((state) => state.guessSelection.value);
 	const isComplete = useSelector((state) => state.settings.value.complete);
@@ -196,6 +172,13 @@ export default function Home({locale}) {
 		}
 	};
 
+	// 滚动到指定区域的函数
+	const scrollToSection = (ref) => {
+		if (ref && ref.current) {
+			ref.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
 	return (
 		<div className="min-h-screen flex flex-col bg-[--background-primary] relative overflow-hidden transition-colors duration-300">
 			{/* 吉卜力风格的装饰元素 */}
@@ -221,7 +204,7 @@ export default function Home({locale}) {
 			
 			<div className="flex-1 flex flex-col items-center py-4 px-4 z-10 max-w-2xl mx-auto w-full">
 				{/* 将游戏介绍和FAQ移到这里，设置更宽 */}
-				<div className="w-full max-w-4xl mx-auto">
+				<div className="w-full max-w-4xl mx-auto" ref={gameRef}>
 					{modalComponent}
 					<div className="w-full mb-4 title-container">
 						<Title />
@@ -294,7 +277,7 @@ export default function Home({locale}) {
 				</div>
 				{/* 游戏介绍和FAQ区域，宽度放大 */}
 				<div className="w-full max-w-2xl mx-auto">
-					<div className="w-full mt-3 game-intro-container rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
+					<div ref={introRef} className="w-full mt-3 game-intro-container rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 hover:shadow-lg animate-slideDown">
 						<h2 className="text-2xl font-bold text-[--ghibli-brown] mb-3">{tIntro('gameIntroTitle')}</h2>
 						<div className="text-[--text-secondary] text-lg space-y-2">
 							<p>{tIntro('gameIntroDesc')}</p>
@@ -332,7 +315,7 @@ export default function Home({locale}) {
 							</div>
 						</div>
 					</div>
-					<div className="w-full mt-3 rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
+					<div ref={faqRef} className="w-full mt-3 rounded-xl p-4 shadow-md border border-[--border-color] transition-all duration-300 animate-slideDown">
 						<h2 className="text-2xl font-bold text-[--ghibli-brown] mb-4">{tFaq('faqTitle')}</h2>
 						<div className="space-y-1">
 							{getFaqItems().map((item, index) => (
@@ -364,177 +347,46 @@ export default function Home({locale}) {
 				</div>
 			</div>
 			
-			<style jsx>{`
-				.map-container {
-					background-color: white !important;
-					transition: all 0.3s ease;
-				}
-				
-				.dark-map-container {
-					background-color: var(--ghibli-dark-blue) !important;
-					border-color: transparent !important;
-					box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(101, 165, 209, 0.15);
-				}
-				
-				.decorative-element {
-					position: absolute;
-					opacity: 0.2;
-					transition: all 0.5s ease;
-				}
-				
-				.leaf {
-					top: 0;
-					left: 0;
-					width: 20%;
-					max-width: 150px;
-					transform: rotate(-12deg);
-				}
-				
-				.cloud {
-					bottom: 0;
-					right: 0;
-					width: 25%;
-					max-width: 180px;
-				}
-				
-				/* 暗色模式的装饰元素调整 */
-				.decorative-element.dark {
-					opacity: 0.1;
-				}
-				
-				/* 月亮装饰 */
-				.moon-decoration {
-					position: absolute;
-					top: 30px;
-					right: 10%;
-					z-index: 1;
-				}
-				
-				.moon {
-					width: 40px;
-					height: 40px;
-					border-radius: 50%;
-					background: #e9e2d5;
-					box-shadow: 0 0 20px rgba(233, 226, 213, 0.4);
-				}
-				
-				.moon-glow {
-					position: absolute;
-					top: -10px;
-					left: -10px;
-					right: -10px;
-					bottom: -10px;
-					border-radius: 50%;
-					background: radial-gradient(circle, rgba(233, 226, 213, 0.3) 0%, rgba(233, 226, 213, 0) 70%);
-				}
-				
-				/* 游戏介绍区域样式 */
-				.game-intro-container {
-					position: relative;
-					overflow: hidden;
-					transition: all 0.3s ease;
-				}
-				
-				.game-intro-container::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 4px;
-					background: linear-gradient(90deg, var(--ghibli-primary) 0%, var(--ghibli-secondary) 100%);
-					opacity: 0.7;
-				}
-				
-				.game-intro-container:hover::before {
-					opacity: 1;
-				}
-				
-				/* 为展开内容添加淡入效果 */
-				@keyframes fadeIn {
-					from { opacity: 0; transform: translateY(-10px); }
-					to { opacity: 1; transform: translateY(0); }
-				}
-				
-				@keyframes slideDown {
-					from { opacity: 0; transform: translateY(-20px); }
-					to { opacity: 1; transform: translateY(0); }
-				}
-				
-				.animate-fadeIn {
-					animation: fadeIn 0.3s ease forwards;
-				}
-				
-				.animate-slideDown {
-					animation: slideDown 0.4s ease forwards;
-				}
-				
-				/* 暗色主题星星动画 */
-				@keyframes twinkle {
-					0% {
-						opacity: 0.3;
-						transform: scale(1);
-					}
-					50% {
-						opacity: 0.8;
-						transform: scale(1.2);
-					}
-					100% {
-						opacity: 0.3;
-						transform: scale(1);
-					}
-				}
-				
-				@media (max-width: 480px) {
-					.title-container {
-						margin-top: 10px;
-						margin-bottom: 15px;
-					}
-					
-					.py-4 {
-						padding-top: 0.75rem;
-						padding-bottom: 0.75rem;
-					}
-					
-					.map-container {
-						margin-bottom: 0.75rem;
-						padding: 0.5rem;
-					}
-					
-					.help-toggle-btn {
-						margin-top: 12px;
-					}
-				}
-				
-				/* 移除底部分享区域样式，因为已经不在底部了 */
-				.mt-auto.pt-4 {
-					position: relative;
-					overflow: hidden;
-				}
-				
-				/* 暗色模式下的分享区域渐变背景 - 此样式可以保留用于其他目的 */
-				@media (prefers-color-scheme: dark) {
-					.mt-auto.pt-4::before {
-						content: '';
-						position: absolute;
-						left: 0;
-						right: 0;
-						top: 0;
-						height: 1px;
-						background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 50%, transparent);
-					}
-				}
-				
-				/* 添加淡入动画 */
-				@keyframes fadeIn {
-					from { opacity: 0; transform: translateY(10px); }
-					to { opacity: 1; transform: translateY(0); }
-				}
-				
-				.animate-fadeIn {
-					animation: fadeIn 0.6s ease-out forwards;
-				}
-			`}</style>
+			{/* 页脚导航 */}
+			<footer className="w-full bg-transparent border-t border-[--border-color] py-3 px-4 mt-8 z-20">
+				<div className="max-w-2xl mx-auto flex justify-between items-center">
+					<div className="text-[--text-secondary] text-sm">
+						© 2025 • Worldle Unlimited. <a href="https://worldle.top" className="text-[--ghibli-green] hover:text-[--ghibli-night-green-dark] transition-colors duration-200">worldle.top</a>
+					</div>
+					<div className="flex space-x-2">
+						<button 
+							onClick={() => scrollToSection(gameRef)}
+							className="footer-nav-btn"
+							aria-label="回到游戏"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+							</svg>
+							<span>Home</span>
+						</button>
+						<button 
+							onClick={() => scrollToSection(introRef)}
+							className="footer-nav-btn"
+							aria-label="游戏介绍"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+							</svg>
+							<span>About</span>
+						</button>
+						<button 
+							onClick={() => scrollToSection(faqRef)}
+							className="footer-nav-btn"
+							aria-label="常见问题"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+							</svg>
+							<span>FAQ</span>
+						</button>
+					</div>
+				</div>
+			</footer>
 		</div>
 	);
 }

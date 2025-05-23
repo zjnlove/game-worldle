@@ -1,0 +1,247 @@
+.map-container {
+	background-color: white !important;
+	transition: all 0.3s ease;
+}
+
+.dark-map-container {
+	background-color: var(--ghibli-dark-blue) !important;
+	border-color: transparent !important;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(101, 165, 209, 0.15);
+}
+
+.decorative-element {
+	position: absolute;
+	opacity: 0.2;
+	transition: all 0.5s ease;
+}
+
+.leaf {
+	top: 0;
+	left: 0;
+	width: 20%;
+	max-width: 150px;
+	transform: rotate(-12deg);
+}
+
+.cloud {
+	bottom: 0;
+	right: 0;
+	width: 25%;
+	max-width: 180px;
+}
+
+/* 暗色模式的装饰元素调整 */
+.decorative-element.dark {
+	opacity: 0.1;
+}
+
+/* 月亮装饰 */
+.moon-decoration {
+	position: absolute;
+	top: 30px;
+	right: 10%;
+	z-index: 1;
+}
+
+.moon {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #e9e2d5;
+	box-shadow: 0 0 20px rgba(233, 226, 213, 0.4);
+}
+
+.moon-glow {
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	right: -10px;
+	bottom: -10px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(233, 226, 213, 0.3) 0%, rgba(233, 226, 213, 0) 70%);
+}
+
+/* 游戏介绍区域样式 */
+.game-intro-container {
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+
+.game-intro-container::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: linear-gradient(90deg, var(--ghibli-primary) 0%, var(--ghibli-secondary) 100%);
+	opacity: 0.7;
+}
+
+.game-intro-container:hover::before {
+	opacity: 1;
+}
+
+/* 为展开内容添加淡入效果 */
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(-10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+	from { opacity: 0; transform: translateY(-20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+	animation: fadeIn 0.3s ease forwards;
+}
+
+.animate-slideDown {
+	animation: slideDown 0.4s ease forwards;
+}
+
+/* 暗色主题星星动画 */
+@keyframes twinkle {
+	0% {
+		opacity: 0.3;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.8;
+		transform: scale(1.2);
+	}
+	100% {
+		opacity: 0.3;
+		transform: scale(1);
+	}
+}
+
+/* 页脚样式 */
+footer {
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	border-top: 1px solid rgba(var(--border-color-rgb, 200, 200, 200), 0.2);
+	position: relative;
+}
+
+footer::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to bottom, transparent, rgba(var(--background-primary-rgb, 255, 255, 255), 0.3));
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* 页脚导航按钮样式 */
+.footer-nav-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--ghibli-brown);
+	background-color: transparent;
+	border: none;
+	transition: all 0.2s ease;
+}
+
+.footer-nav-btn:hover {
+	background-color: rgba(var(--ghibli-primary-rgb, 100, 180, 200), 0.1);
+	transform: translateY(-2px);
+}
+
+.footer-nav-btn:active {
+	transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+	.title-container {
+		margin-top: 10px;
+		margin-bottom: 15px;
+	}
+	
+	.py-4 {
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+	}
+	
+	.map-container {
+		margin-bottom: 0.75rem;
+		padding: 0.5rem;
+	}
+	
+	.help-toggle-btn {
+		margin-top: 12px;
+	}
+	
+	/* 移动端页脚样式调整 */
+	footer {
+		padding: 10px;
+	}
+	
+	.footer-nav-btn {
+		padding: 4px 8px;
+		font-size: 0.8rem;
+	}
+	
+	.footer-nav-btn svg {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+/* 移除底部分享区域样式，因为已经不在底部了 */
+.mt-auto.pt-4 {
+	position: relative;
+	overflow: hidden;
+}
+
+/* 暗色模式下的分享区域渐变背景 - 此样式可以保留用于其他目的 */
+@media (prefers-color-scheme: dark) {
+	.mt-auto.pt-4::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 50%, transparent);
+	}
+	
+	/* 暗色模式下页脚按钮样式调整 */
+	.footer-nav-btn {
+		background-color: transparent;
+		border-color: transparent;
+		color: var(--text-secondary);
+	}
+	
+	.footer-nav-btn:hover {
+		background-color: rgba(var(--ghibli-primary-rgb, 100, 180, 200), 0.2);
+		border-color: transparent;
+		color: var(--ghibli-primary);
+	}
+}
+
+/* 添加淡入动画 */
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* 星星样式 */
+.star {
+	position: absolute;
+	background-color: #fff;
+	border-radius: 50%;
+	animation: twinkle 4s infinite ease-in-out;
+	pointer-events: none;
+	z-index: 1;
+} 
