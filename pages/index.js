@@ -1,4 +1,3 @@
-import "../styles/index.css";
 import CountryMap from "../components/CountryMap";
 import GuessInput from "../components/input/guessInput";
 import Guesses from "../components/guesses/guesses";
