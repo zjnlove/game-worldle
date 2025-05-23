@@ -309,7 +309,7 @@ export default function Home({locale}) {
 							</div>
 							<div className="pt-1">
 								<button 
-									className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-lg font-bold flex items-center" 
+									className="text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] transition-colors duration-200 text-lg font-medium flex items-center" 
 									onClick={() => setShowMoreIntro(!showMoreIntro)}
 								>
 									<span>{showMoreIntro ? tIntro('showLess') : tIntro('readMore')}</span>
@@ -338,7 +338,7 @@ export default function Home({locale}) {
 							{getFaqItems().map((item, index) => (
 								<div key={index} className="border-b border-[--border-color]">
 									<button 
-										className="text-xl w-full py-3 flex justify-between items-center text-left font-bold text-[--text-primary] focus:outline-none"
+										className="text-xl w-full py-3 flex justify-between items-center text-left font-medium text-[--text-primary] focus:outline-none"
 										onClick={() => setExpandedFaqIndex(expandedFaqIndex === index ? -1 : index)}
 									>
 										<span>{item.question}</span>
