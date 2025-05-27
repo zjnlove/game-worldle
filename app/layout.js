@@ -138,6 +138,22 @@ export default function RootLayout({ children, params }) {
           `
         }} />
         
+        {/* 结构化数据 JSON-LD */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: `
+            {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "Worldle Unlimited",
+              "url": "${process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top'}",
+              "description": "A daily geography guessing game about countries/regions, similar to Wordle but focused on world geography.",
+              "applicationCategory": "GameApplication",
+              "operatingSystem": "Web",
+              "screenshot": "${process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top'}/worldle-og-image.png",
+            }
+          `
+        }} />
+        
       </head>
       <body>
         <Providers>{children}</Providers>

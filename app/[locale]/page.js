@@ -1,4 +1,4 @@
-import ClientPage from '.';
+import Index from './index';
 import { i18n } from '../../i18n/config';
 import { redirect } from 'next/navigation';
 import fs from 'fs';
@@ -18,26 +18,6 @@ export const loadTranslation = (locale, namespace) => {
     }
     return {};
   }
-};
-
-// 添加结构化数据
-export const generateStructuredData = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Worldle Unlimited",
-    "alternateName": "WORLDLE UNLIMITED",
-    "description": "Play Worldle Unlimited, the fun geography game where you guess countries from their silhouette. Enjoy unlimited games with Worldle Unlimited.",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top',
-    "applicationCategory": "GameApplication",
-    "genre": "Geography Quiz",
-    "operatingSystem": "Web Browser",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  };
 };
 
 // 为页面定义元数据
@@ -87,13 +67,5 @@ export default function LocalePage({ params }) {
     redirect('/');
   }
 
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
-      />
-      <ClientPage locale={locale} />
-    </>
-  );
+  return <Index locale={locale} />;
 } 

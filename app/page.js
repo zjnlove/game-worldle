@@ -2,7 +2,7 @@ import { i18n } from '../i18n/config';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Index from './[locale]/index';
-import { generateStructuredData, loadTranslation } from './[locale]/page';
+import {loadTranslation } from './[locale]/page';
 
 // 为页面定义元数据
 export async function generateMetadata() {
@@ -45,10 +45,6 @@ export default function Home() {
   // 如果是默认语言或没有语言选择，直接显示默认语言内容（不重定向）
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
-      />
       <Index locale={i18n.defaultLocale} />
     </>
   );
