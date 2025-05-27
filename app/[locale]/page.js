@@ -1,4 +1,4 @@
-import ClientPage from './ClientPage';
+import ClientPage from '.';
 import { i18n } from '../../i18n/config';
 import { redirect } from 'next/navigation';
 import fs from 'fs';

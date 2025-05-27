@@ -1,6 +1,5 @@
 import { Providers } from './providers';
 import { i18n } from '../i18n/config';
-import Script from 'next/script';
 import fs from 'fs';
 import path from 'path';
 
@@ -117,30 +116,30 @@ export default function RootLayout({ children, params }) {
     <html lang={locale}>
       <head>
         {/* 在 Next.js 13 中，不需要在 head 中手动添加脚本，可以在 body 中使用 Script 组件 */}
-      </head>
-      <body>
+        
         {/* Google AdSense */}
-        <Script
+        <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_ADSENSE_ID || ''}`}
-          strategy="afterInteractive"
           crossOrigin="anonymous"
         />
         
         {/* Google Analytics */}
-        <Script 
+        <script 
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-FV14KERL0S" 
-          strategy="afterInteractive" 
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
+        <script id="google-analytics" dangerouslySetInnerHTML={{
+          __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-FV14KERL0S');
-          `}
-        </Script>
+          `
+        }} />
         
+      </head>
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>

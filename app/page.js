@@ -1,7 +1,7 @@
 import { i18n } from '../i18n/config';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import ClientPage from './[locale]/ClientPage';
+import Index from './[locale]/index';
 import { generateStructuredData, loadTranslation } from './[locale]/page';
 
 // 为页面定义元数据
@@ -49,7 +49,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
-      <ClientPage locale={i18n.defaultLocale} />
+      <Index locale={i18n.defaultLocale} />
     </>
   );
 } 
