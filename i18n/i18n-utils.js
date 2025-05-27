@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname, useParams } from 'next/navigation';
 import { i18n } from './config';
 
 // 缓存已加载的语言包
@@ -62,7 +62,26 @@ export const preloadDefaultNamespaces = async (locale) => {
  */
 export const useI18n = (namespace = 'common', options = {}) => {
   const params = useParams();
-  const locale = params?.locale || i18n.defaultLocale;
+  const pathname = usePathname();
+  
+  // 获取当前语言
+  // 1. 首先从URL参数中获取
+  // 2. 如果URL中没有语言参数，则检查是否有传入的locale参数
+  // 3. 如果都没有，则使用默认语言
+  let locale = params?.locale;
+  
+  // 如果没有从URL参数中获取到语言，则使用传入的locale或默认语言
+  if (!locale) {
+    // 检查是否有作为props传入的locale
+    if (options.locale) {
+      locale = options.locale;
+    } else {
+      // 从路径中提取语言代码，如果路径是根路径，则使用默认语言
+      const pathnameLocale = pathname?.split('/')[1];
+      locale = i18n.locales.includes(pathnameLocale) ? pathnameLocale : i18n.defaultLocale;
+    }
+  }
+  
   const [translations, setTranslations] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   

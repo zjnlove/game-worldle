@@ -21,9 +21,9 @@ import { useI18n } from '../../i18n/i18n-utils';
 import { addStars, removeStars } from '../../components/starsEffect';
 
 export default function ClientPage({ locale }) {
-	const { t } = useI18n('common');
-	const { t: tIntro } = useI18n('game-intro');
-	const { t: tFaq } = useI18n('game-faq');
+	const { t } = useI18n('common', { locale });
+	const { t: tIntro } = useI18n('game-intro', { locale });
+	const { t: tFaq } = useI18n('game-faq', { locale });
 	const guesses = useSelector((state) => state.guesses.value);
 	const answer = useSelector((state) => state.answer.value);
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top';

@@ -1,6 +1,8 @@
 import { Providers } from './providers';
 import { i18n } from '../i18n/config';
 import Script from 'next/script';
+import fs from 'fs';
+import path from 'path';
 
 // 引入全局样式
 import '../styles/globals.css';
@@ -8,18 +10,31 @@ import '../styles/index.css';
 import '../styles/LanguageSwitcher.css';
 import '../styles/ThemeToggle.css';
 
+// 服务器端加载翻译文件
+const loadTranslation = (locale, namespace) => {
+  try {
+    const filePath = path.join(process.cwd(), 'i18n', 'locales', locale, `${namespace}.json`);
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContent);
+  } catch (error) {
+    console.error(`Failed to load translation file for locale ${locale} and namespace ${namespace}`, error);
+    // 如果加载失败，尝试使用默认语言
+    if (locale !== i18n.defaultLocale) {
+      return loadTranslation(i18n.defaultLocale, namespace);
+    }
+    return {};
+  }
+};
+
 export async function generateMetadata({ params }) {
   // 获取当前语言
   const locale = params?.locale || i18n.defaultLocale;
   
-  // 这里应该获取翻译文本，但需要实现相应的函数
-  // 以下是占位符，实际应用中需要替换为真实的翻译获取逻辑
+  // 从国际化文件中加载翻译
+  const translations = loadTranslation(locale, 'common');
+  
+  // 翻译函数
   const t = (key) => {
-    const translations = {
-      seoTitle: 'Worldle Unlimited',
-      seoDescription: 'Guess the country from the silhouette in 6 tries or less. A new country is available each day.',
-      seoKeywords: 'worldle, game, geography, countries, guess, map',
-    };
     return translations[key] || key;
   };
 
@@ -62,7 +77,6 @@ export async function generateMetadata({ params }) {
       telephone: false,
     },
     title: {
-      template: `Worldle - %s`,
       default: t('seoTitle'),
     },
     description: t('seoDescription'),

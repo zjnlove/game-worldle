@@ -5,6 +5,8 @@ import { usePathname, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getSupportedLanguages } from '../i18n/i18n-utils';
 import '../styles/LanguageSwitcher.css';
+import { i18n } from '../i18n/config';
+import Cookies from 'js-cookie';
 
 const LanguageSwitcher = () => {
   const pathname = usePathname();
@@ -70,6 +72,11 @@ const LanguageSwitcher = () => {
 
   // 构建语言切换链接
   const getLanguageHref = (langCode) => {
+    // 如果是默认语言(英语)，返回根路径
+    if (langCode === i18n.defaultLocale) {
+      return '/';
+    }
+    
     // 如果当前路径是根路径或语言路径，直接返回新语言路径
     if (pathname === '/' || pathname === `/${locale}`) {
       return `/${langCode}`;
