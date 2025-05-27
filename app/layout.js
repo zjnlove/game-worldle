@@ -149,7 +149,12 @@ export default function RootLayout({ children, params }) {
               "description": "A daily geography guessing game about countries/regions, similar to Wordle but focused on world geography.",
               "applicationCategory": "GameApplication",
               "operatingSystem": "Web",
-              "screenshot": "${process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top'}/worldle-og-image.png",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "screenshot": "${process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top'}/worldle-og-image.png"
             }
           `
         }} />
