@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { getSupportedLanguages } from '../i18n/i18n-utils';
 import '../styles/LanguageSwitcher.css';
 import { i18n } from '../i18n/config';
-import Cookies from 'js-cookie';
 
 const LanguageSwitcher = () => {
   const pathname = usePathname();
