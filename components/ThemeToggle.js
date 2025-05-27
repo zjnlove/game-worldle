@@ -1,9 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import '../styles/ThemeToggle.css';
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { t, i18n } = useTranslation('common');
 
   // 在组件加载时读取存储的主题设置
   useEffect(() => {
@@ -54,85 +55,6 @@ const ThemeToggle = () => {
           </svg>
         )}
       </button>
-
-      <style jsx>{`
-        .theme-toggle {
-          z-index: 10;
-        }
-        .theme-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          color: white;
-          border-radius: 50%;
-          font-weight: bold;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: none;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-          position: relative;
-          overflow: hidden;
-        }
-        .light-mode-btn {
-          background-color: var(--ghibli-green);
-        }
-        .dark-mode-btn {
-          background-color: var(--ghibli-blue);
-        }
-        .theme-btn::before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          z-index: -1;
-          background: ${isDarkMode 
-            ? 'linear-gradient(45deg, var(--ghibli-blue), var(--ghibli-shadow-blue))' 
-            : 'linear-gradient(45deg, var(--ghibli-green), var(--ghibli-soft-green))'};
-          border-radius: 50%;
-          opacity: 0.6;
-          transition: all 0.3s ease;
-        }
-        .theme-btn:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-        .light-mode-btn:hover {
-          background-color: var(--ghibli-green);
-        }
-        .dark-mode-btn:hover {
-          background-color: var(--ghibli-shadow-blue);
-        }
-        .theme-btn:hover::before {
-          opacity: 1;
-        }
-        .theme-icon {
-          color: var(--ghibli-dark);
-          position: relative;
-          z-index: 2;
-          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-          transition: all 0.3s ease;
-        }
-
-        .theme-btn:hover .theme-icon {
-          transform: ${isDarkMode ? 'rotate(45deg)' : 'rotate(-45deg)'};
-        }
-        
-        @media (max-width: 768px) {
-          .theme-btn {
-            width: 36px;
-            height: 36px;
-          }
-          
-          .theme-icon {
-            width: 16px;
-            height: 16px;
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import nextI18NextConfig from './config';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { usePathname, useParams } from 'next/navigation';
+import { i18n } from './config';
 
 // 缓存已加载的语言包
 const loadedNamespaces = {};
@@ -37,8 +39,8 @@ export const loadNamespace = async (locale, ns) => {
  * @param {string} locale 语言代码
  */
 export const preloadDefaultNamespaces = async (locale) => {
-  const defaultNS = nextI18NextConfig.defaultNS;
-  const allNS = nextI18NextConfig.ns || [];
+  const defaultNS = 'common';
+  const allNS = ['common', 'countries', 'game-intro', 'game-faq'];
   
   // 优先加载默认命名空间
   await loadNamespace(locale, defaultNS);
@@ -53,14 +55,33 @@ export const preloadDefaultNamespaces = async (locale) => {
 };
 
 /**
- * 自定义翻译Hook - 统一的国际化调用方式
+ * 自定义翻译Hook - 适用于 App Router
  * @param {string} namespace 命名空间
  * @param {Object} options 选项
  * @returns {Object} 包含t函数的对象
  */
 export const useI18n = (namespace = 'common', options = {}) => {
-  const router = useRouter();
-  const locale = router.locale || nextI18NextConfig.i18n.defaultLocale;
+  const params = useParams();
+  const pathname = usePathname();
+  
+  // 获取当前语言
+  // 1. 首先从URL参数中获取
+  // 2. 如果URL中没有语言参数，则检查是否有传入的locale参数
+  // 3. 如果都没有，则使用默认语言
+  let locale = params?.locale;
+  
+  // 如果没有从URL参数中获取到语言，则使用传入的locale或默认语言
+  if (!locale) {
+    // 检查是否有作为props传入的locale
+    if (options.locale) {
+      locale = options.locale;
+    } else {
+      // 从路径中提取语言代码，如果路径是根路径，则使用默认语言
+      const pathnameLocale = pathname?.split('/')[1];
+      locale = i18n.locales.includes(pathnameLocale) ? pathnameLocale : i18n.defaultLocale;
+    }
+  }
+  
   const [translations, setTranslations] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   
@@ -101,7 +122,7 @@ export const useI18n = (namespace = 'common', options = {}) => {
  * @returns {Array} 语言列表
  */
 export const getSupportedLanguages = () => {
-  return nextI18NextConfig.i18n.locales.map(code => {
+  return i18n.locales.map(code => {
     // 语言显示名称映射
     const nameMap = {
       'en': 'English',
@@ -127,6 +148,6 @@ export const getSupportedLanguages = () => {
  * @param {string} locale 语言代码
  */
 export const initI18n = async (locale) => {
-  const actualLocale = locale || nextI18NextConfig.i18n.defaultLocale;
+  const actualLocale = locale || i18n.defaultLocale;
   return preloadDefaultNamespaces(actualLocale);
 }; 
