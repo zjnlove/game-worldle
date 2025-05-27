@@ -32,11 +32,14 @@ export default function Home() {
   const cookieStore = cookies();
   const preferredLanguage = cookieStore.get('NEXT_LOCALE')?.value;
   
-  // 如果有用户选择的语言且该语言受支持且不是默认语言，则重定向到该语言页面
-  if (preferredLanguage && 
-      i18n.locales.includes(preferredLanguage) && 
-      preferredLanguage !== i18n.defaultLocale) {
-    redirect(`/${preferredLanguage}`);
+  // 只在生产环境中处理重定向，开发环境保持当前路径以便测试
+  if (process.env.NODE_ENV === 'production') {
+    // 如果有用户选择的语言且该语言受支持且不是默认语言，则重定向到该语言页面
+    if (preferredLanguage && 
+        i18n.locales.includes(preferredLanguage) && 
+        preferredLanguage !== i18n.defaultLocale) {
+      redirect(`/${preferredLanguage}`);
+    }
   }
   
   // 如果是默认语言或没有语言选择，直接显示默认语言内容（不重定向）

@@ -72,11 +72,18 @@ export default function LocalePage({ params }) {
   
   // 验证语言是否支持，如果不支持则重定向到默认语言
   if (!i18n.locales.includes(locale)) {
-    redirect('/');
+    // 使用 notFound() 而不是重定向
+    return (
+      <div className="text-center p-8">
+        <h1 className="text-2xl font-bold">Language not supported</h1>
+        <p>Sorry, we don't support "{locale}" language.</p>
+      </div>
+    );
   }
   
   // 如果是默认语言，重定向到根路径（不显示语言前缀）
-  if (locale === i18n.defaultLocale) {
+  // 但只在生产环境中执行，开发环境中保持当前路径以便测试
+  if (locale === i18n.defaultLocale && process.env.NODE_ENV === 'production') {
     redirect('/');
   }
 
