@@ -56,7 +56,7 @@ export default function LocalePage({ params }) {
     return (
       <div className="text-center p-8">
         <h1 className="text-2xl font-bold">Language not supported</h1>
-        <p>Sorry, we don't support "{locale}" language.</p>
+        <p>Sorry, we don&apos;t support &quot;{locale}&quot; language.</p>
       </div>
     );
   }
