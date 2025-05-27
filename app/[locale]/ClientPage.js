@@ -1,26 +1,26 @@
-import CountryMap from "../components/CountryMap";
-import GuessInput from "../components/input/guessInput";
-import Guesses from "../components/guesses/guesses";
-import CorrectModal from "../components/modal/correctModal";
-import CorrectAnswerBtn from "../components/input/checkAnswerBtn";
-import Title from "../components/title";
-import Head from "next/head";
-import ShareButtons from "../components/ShareButtons";
+'use client';
+
+import CountryMap from "../../components/CountryMap";
+import GuessInput from "../../components/input/guessInput";
+import Guesses from "../../components/guesses/guesses";
+import CorrectModal from "../../components/modal/correctModal";
+import CorrectAnswerBtn from "../../components/input/checkAnswerBtn";
+import Title from "../../components/title";
+import ShareButtons from "../../components/ShareButtons";
 import {
 	NewCountry,
 	checkGuess,
 	getDistanceAndBearing,
-} from "../components/util";
-import { useEffect, useState, useMemo, useRef } from "react";
+} from "../../components/util";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addGuess, clearGuesses } from "../store/guessesSlice";
-import { showModal, setComplete } from "../store/settingsSlice";
-import { setSelection } from "../store/guessSelectionSlice";
-import { useI18n } from '../i18n/i18n-utils';
-import { addStars, removeStars } from '../components/starsEffect';
+import { addGuess, clearGuesses } from "../../store/guessesSlice";
+import { showModal, setComplete } from "../../store/settingsSlice";
+import { setSelection } from "../../store/guessSelectionSlice";
+import { useI18n } from '../../i18n/i18n-utils';
+import { addStars, removeStars } from '../../components/starsEffect';
 
-
-export default function Home({locale}) {
+export default function ClientPage({ locale }) {
 	const { t } = useI18n('common');
 	const { t: tIntro } = useI18n('game-intro');
 	const { t: tFaq } = useI18n('game-faq');
@@ -250,29 +250,6 @@ export default function Home({locale}) {
 							<h2 className="text-center text-[--ghibli-brown] text-xl font-bold mb-2">Share on social media</h2>
 							<ShareButtons url={siteUrl} title={`Worldle - ${t('title')}`} />
 						</div>
-												
-						{/* 帮助按钮 */}
-						{/* <button 
-							className="help-toggle-btn mx-auto mt-4 text-[--ghibli-primary] hover:text-[--ghibli-primary-dark] font-medium flex items-center gap-2 bg-[--background-secondary] py-2 px-6 rounded-full shadow-sm border border-[--border-color] transition-all duration-300"
-							onClick={() => setShowHelpSection(!showHelpSection)}
-						>
-							{showHelpSection ? (
-								<>
-									<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-										<path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-									</svg>
-									{t('hideHelp')}
-								</>
-							) : (
-								<>
-									<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-										<path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-									</svg>
-									{t('showHelp')}
-								</>
-							)}
-						</button> */}
-						
 					</div>
 				</div>
 				{/* 游戏介绍和FAQ区域，宽度放大 */}
@@ -389,34 +366,4 @@ export default function Home({locale}) {
 			</footer>
 		</div>
 	);
-}
-
-export async function getServerSideProps({ locale }) {
-	// 定义首页使用的结构化数据
-	const structuredData = {
-		"@context": "https://schema.org",
-		"@type": "WebApplication",
-		"name": "Worldle Unlimited",
-		"alternateName": "WORLDLE UNLIMITED",
-		"description": "Play Worldle Unlimited, the fun geography game where you guess countries from their silhouette. Enjoy unlimited games with Worldle Unlimited.",
-		"url": process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top',
-		"applicationCategory": "GameApplication",
-		"genre": "Geography Quiz",
-		"operatingSystem": "Web Browser",
-		"offers": {
-			"@type": "Offer",
-			"price": "0",
-			"priceCurrency": "USD"
-		}
-	};
-
-	return {
-		props: {
-			locale,
-			// 添加SEO相关数据
-			structuredData,
-			canonicalPath: '/',
-			ogImage: 'worldle-og-image.png'
-		},
-	};
-}
+} 

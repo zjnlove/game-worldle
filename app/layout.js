@@ -1,0 +1,134 @@
+import { Providers } from './providers';
+import { i18n } from '../i18n/config';
+import Script from 'next/script';
+
+// 引入全局样式
+import '../styles/globals.css';
+import '../styles/index.css';
+import '../styles/LanguageSwitcher.css';
+import '../styles/ThemeToggle.css';
+
+export async function generateMetadata({ params }) {
+  // 获取当前语言
+  const locale = params?.locale || i18n.defaultLocale;
+  
+  // 这里应该获取翻译文本，但需要实现相应的函数
+  // 以下是占位符，实际应用中需要替换为真实的翻译获取逻辑
+  const t = (key) => {
+    const translations = {
+      seoTitle: 'Worldle Unlimited',
+      seoDescription: 'Guess the country from the silhouette in 6 tries or less. A new country is available each day.',
+      seoKeywords: 'worldle, game, geography, countries, guess, map',
+    };
+    return translations[key] || key;
+  };
+
+  return {
+    applicationName: 'Worldle Unlimited',
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://worldle.top'),
+    alternates: {
+      canonical: '/',
+      languages: {
+        'en': '/en',
+        'zh': '/zh',
+        'tw': '/tw',
+        'ja': '/ja',
+        'ko': '/ko',
+        'de': '/de',
+        'fr': '/fr',
+        'ru': '/ru',
+        'hi': '/hi',
+      },
+    },
+    icons: {
+      icon: [
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+      other: [
+        { url: '/safari-pinned-tab.svg', rel: 'mask-icon', color: '#5bbad5' },
+      ],
+    },
+    manifest: '/site.webmanifest',
+    themeColor: '#ffffff',
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    appleWebApp: {
+      capable: true,
+    },
+    formatDetection: {
+      telephone: false,
+    },
+    title: {
+      template: `Worldle - %s`,
+      default: t('seoTitle'),
+    },
+    description: t('seoDescription'),
+    keywords: t('seoKeywords'),
+    openGraph: {
+      title: `Worldle - ${t('seoTitle')}`,
+      description: t('seoDescription'),
+      url: '/',
+      siteName: 'Worldle Unlimited',
+      locale: locale,
+      type: 'website',
+      images: [
+        {
+          url: '/worldle-og-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'Worldle',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Worldle - ${t('seoTitle')}`,
+      description: t('seoDescription'),
+      images: ['/worldle-og-image.png'],
+    },
+    other: {
+      'msapplication-TileColor': '#2d89ef',
+    },
+  };
+}
+
+export default function RootLayout({ children, params }) {
+  // 获取当前语言
+  const locale = params?.locale || i18n.defaultLocale;
+  
+  return (
+    <html lang={locale}>
+      <head>
+        {/* 在 Next.js 13 中，不需要在 head 中手动添加脚本，可以在 body 中使用 Script 组件 */}
+      </head>
+      <body>
+        {/* Google AdSense */}
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_ADSENSE_ID || ''}`}
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+        
+        {/* Google Analytics */}
+        <Script 
+          src="https://www.googletagmanager.com/gtag/js?id=G-FV14KERL0S" 
+          strategy="afterInteractive" 
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FV14KERL0S');
+          `}
+        </Script>
+        
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+} 
